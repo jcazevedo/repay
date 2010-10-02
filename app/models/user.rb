@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   validate :password_non_blank
 
+  has_many :payment_components
+
   def password
     @password
   end
