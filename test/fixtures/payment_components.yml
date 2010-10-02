@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  payment_id: 1
+  value: 9.99
+  paid: 9.99
+  user_id: 9.99
+
+two:
+  payment_id: 1
+  value: 9.99
+  paid: 9.99
+  user_id: 9.99
