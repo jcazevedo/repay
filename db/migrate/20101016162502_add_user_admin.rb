@@ -1,12 +1,12 @@
 class AddUserAdmin < ActiveRecord::Migration
   def self.up
-    User.create(:name => 'Admin', 
+    User.create(:name => 'Admin',
                 :username => 'admin',
                 :password => 'admin', 
                 :password_confirmation => 'admin')
   end
 
   def self.down
-    User.find_by_name('admin').destroy
+    User.find_by_username('admin').destroy
   end
 end
