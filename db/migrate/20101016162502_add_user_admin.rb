@@ -1,6 +1,7 @@
 class AddUserAdmin < ActiveRecord::Migration
   def self.up
-    User.create(:name => 'admin', 
+    User.create(:name => 'Admin', 
+                :username => 'admin',
                 :password => 'admin', 
                 :password_confirmation => 'admin')
   end

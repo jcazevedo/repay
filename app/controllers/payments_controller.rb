@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
+    @users = Payment.find_all
   end
 
   def edit
