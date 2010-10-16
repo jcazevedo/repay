@@ -14,6 +14,13 @@
   </p>
 
   <p>
+    Users<br />
+    <% @users.each do |u| %>
+      <%= check_box_tag "payment[users][]", u.id %> <%= u.name %><br />
+    <% end %>
+  </p>
+
+  <p>
     <%= f.submit "New" %>
   </p>
 <% end %>

@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
 
   def new
     @payment = Payment.new
-    @users = Payment.find_all
+    @users = User.find(:all)
   end
 
   def edit
@@ -13,6 +13,7 @@ class PaymentsController < ApplicationController
   end
 
   def create
+    puts params[:payment]['users']
   end
 
   def update
