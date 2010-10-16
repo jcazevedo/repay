@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101002124358) do
+ActiveRecord::Schema.define(:version => 20101016162502) do
 
   create_table "payment_components", :force => true do |t|
     t.integer  "payment_id"
