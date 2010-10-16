@@ -34,7 +34,6 @@ class User < ActiveRecord::Base
   end
 
 private
-  
   def password_non_blank
     errors.add(:password, "Missing password") if hashed_password.blank?
   end
