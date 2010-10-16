@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+  layout 'home'
+
   def login
     if request.post?
       user = User.authenticate(params[:name], params[:password])
