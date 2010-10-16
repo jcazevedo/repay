@@ -6,6 +6,6 @@ class AddUserAdmin < ActiveRecord::Migration
   end
 
   def self.down
-    User.find_by_name('admin').delete
+    User.find_by_name('admin').destroy
   end
 end
