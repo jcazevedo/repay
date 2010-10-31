@@ -33,4 +33,24 @@ class Payment < ActiveRecord::Base
     end
     return true
   end
+
+  def self.all_paid
+    result = []
+
+    Payment.find(:all).each do |payment|
+      result << payment if payment.paid?
+    end
+
+    result
+  end
+
+  def self.all_to_be_paid
+    result = []
+    
+    Payment.find(:all).each do |payment|
+      result << payment if !payment.paid?
+    end
+
+    result
+  end
 end
