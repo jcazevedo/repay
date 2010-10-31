@@ -21,5 +21,4 @@ class PaymentsController < ApplicationController
 
   def destroy
   end
-
 end
