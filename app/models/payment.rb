@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
   end
 
   def value=(value)
-    @value = value
+    @value = value.to_f
   end
 
   def users
@@ -18,9 +18,11 @@ class Payment < ActiveRecord::Base
     vals = @value / @users.length
 
     @users.each do |user|
+      us = User.find(user)
+      paid = false
       pcs = PaymentComponent.create(:value => vals,
-                                    :paid => false,
-                                    :user => user)
+                                    :paid => paid,
+                                    :user => us)
       self.payment_components << pcs
     end
   end
