@@ -1,13 +1,21 @@
 class Payment < ActiveRecord::Base
   has_many :payment_components
 
+  def value
+    @value
+  end
+
+  def value=(value)
+    @value = value
+  end
+
   def users
     @users
   end
 
   def users=(users)
     @users = users
-    vals = self.value / @users.length
+    vals = @value / @users.length
 
     @users.each do |user|
       pcs = PaymentComponent.create(:value => vals,
