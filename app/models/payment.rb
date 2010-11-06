@@ -1,5 +1,6 @@
 class Payment < ActiveRecord::Base
   has_many :payment_components
+  belongs_to :user
 
   def value
     @value
@@ -19,7 +20,8 @@ class Payment < ActiveRecord::Base
 
     @users.each do |user|
       us = User.find(user)
-      paid = false
+      paid = (us == self.user)
+      puts self.user
       pcs = PaymentComponent.create(:value => vals,
                                     :paid => paid,
                                     :user => us)
