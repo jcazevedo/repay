@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+  layout 'home'
+
   def show
     @payment = Payment.find(params[:id])
   end
