@@ -2,6 +2,7 @@
 
 <% form_for(@payment) do |f| %>
   <%= f.error_messages %>
+  <%= f.hidden_field :user_id, :value => session[:user_id] %>
 
   <p>
     <%= f.label :name %><br />
