@@ -5,14 +5,14 @@ Changelog for HouseKeeper
 HouseKeeper 0.0.1 - November 08, 2010
 
     - Allows the creation of payments by specifying the value and list of users
-      to divide the payment with. [jcazevedo]
+      to divide the payment with.
 
     - Allows the owner of a payment to define the amount given by other users to
-      his/her own payments. [jcazevedo]
+      his/her own payments.
 
     - Allows the user to add an amount given by other user, being automatically
-      distributed among the user's payments. [jcazevedo]
+      distributed among the user's payments.
 
-    - Allows the listing of payments. [jcazevedo]
+    - Allows the listing of payments.
 
-    - Allows the filtering of payments by paid, not paid, or all. [jcazevedo]
+    - Allows the filtering of payments by paid, not paid, or all.
