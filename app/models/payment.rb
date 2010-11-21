@@ -69,4 +69,8 @@ class Payment < ActiveRecord::Base
 
     result
   end
+
+  def user_component(user)
+    self.payment_components.find_by_user_id(user.id)
+  end
 end

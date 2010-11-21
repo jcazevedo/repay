@@ -1,1 +1,33 @@
 <h1>Home</h1>
+<div id="payments">
+  <table>
+
+    <tr>
+      <th>Title</th>
+      <% @users.each do |user| %>
+        <th><%= user.name %></th>
+      <% end %>
+    </tr>
+
+    <% @payments.each do |payment| %>
+      <tr>
+        <td><%= payment.name %></td>
+        <% @users.each do |user| %>
+        <% pu = payment.user_component(user) %>
+        <% if pu %>
+        <% if pu.paid? %>
+        <td class="paid">
+        <% else %>
+        <td class="not_paid">
+        <% end %>
+        <%= pu.paid %>/<%= pu.value %>
+        </td>
+        <% else %>
+        <td>N/A</td>
+        <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+
+  </table>
+</div>

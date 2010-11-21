@@ -13,6 +13,6 @@ HouseKeeper 0.0.1 - November 08, 2010
     - Allows the user to add an amount given by other user, being automatically
       distributed among the user's payments.
 
-    - Allows the listing of payments.
+    - Allows the listing of payments. [jcazevedo]
 
     - Allows the filtering of payments by paid, not paid, or all.

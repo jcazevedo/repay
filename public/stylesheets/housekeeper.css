@@ -1,3 +1,15 @@
 body {
   font-family: Verdana, Arial, Helvetica, sans-serif
 }
+
+#payments table td {
+  border: 1px solid black;
+}
+
+#payments table td.paid {
+  background: green;
+}
+
+#payments table td.not_paid {
+  background: red;
+}
