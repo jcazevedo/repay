@@ -2,7 +2,7 @@ Changelog for HouseKeeper
 
     (name of developer listed in brackets)
 
-HouseKeeper 0.0.1 - November 08, 2010
+HouseKeeper 0.0.1 - November 22, 2010
 
     - Allows the creation of payments by specifying the value and list of users
       to divide the payment with. [jcazevedo]
