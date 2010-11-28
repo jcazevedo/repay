@@ -2,6 +2,8 @@ class Payment < ActiveRecord::Base
   has_many :payment_components
   belongs_to :user
 
+  validates_presence_of :name, :user_id
+
   def value
     @value
   end
@@ -46,6 +48,14 @@ class Payment < ActiveRecord::Base
       return false if !pc.paid?
     end
     return true
+  end
+
+  def total
+    sum = 0.0
+    self.payment_components.each do |pc|
+      sum += pc.value
+    end
+    sum
   end
 
   def self.get_all(paid, not_paid)
