@@ -1,0 +1,17 @@
+<tr>
+  <td><%= payment.name %></td>
+  <% @users.each do |user| %>
+  <% pu = payment.user_component(user) %>
+  <% if pu %>
+  <% if pu.paid? %>
+  <td class="paid">
+    <% else %>
+  <td class="not_paid">
+    <% end %>
+    <%= pu.paid %>/<%= pu.value %>
+  </td>
+  <% else %>
+  <td>N/A</td>
+  <% end %>
+  <% end %>
+</tr>

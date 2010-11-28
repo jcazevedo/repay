@@ -1,0 +1,13 @@
+<% if payments.length > 0 %>
+<table>
+  <tr>
+    <th>Title</th>
+    <% @users.each do |user| %>
+    <th><%= user.name %></th>
+    <% end %>
+  </tr>
+  <%= render(:partial => "payment", :collection => payments) %>
+</table>
+<% else %>
+<p>There are no payments to display</p>
+<% end %>
