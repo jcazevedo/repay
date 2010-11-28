@@ -49,12 +49,14 @@ class Payment < ActiveRecord::Base
   end
 
   def self.get_all(paid, not_paid)
-    @payments = Payment.find(:all, :order => 'created_at DESC')
-    @payments.each do |payment|
-      @payments.delete(payment) if ((payment.paid? and paid.nil?) or
-                                    (!payment.paid? and not_paid.nil?))
+    payments = Payment.find(:all, :order => 'created_at DESC')
+    payments_final = []
+    payments.each do |payment|
+      if (!payment.paid? or !paid.nil?) and (payment.paid? or !not_paid.nil?)
+        payments_final << payment
+      end
     end
-    @payments
+    payments_final
   end
 
   def user_component(user)

@@ -3,9 +3,9 @@
   <fieldset>
     <legend>Filter</legend>
     <div>
-      <%= check_box_tag 'paid', true, true %>
+      <%= check_box_tag 'paid', true, params[:paid] %>
       <label for="paid">Paid</label>
-      <%= check_box_tag 'not_paid', true, true %>
+      <%= check_box_tag 'not_paid', true, params[:not_paid] %>
       <label for="not_paid">Not paid</label>
       <%= submit_tag "Filter" %>
     </div>
