@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery # :secret => '10271e900b8541f58c4bead9ca2a86b8'
+  protect_from_forgery :secret => '10271e900b8541f58c4bead9ca2a86b8'
   
   # See ActionController::Base for details 
   # Uncomment this to filter the contents of submitted sensitive data parameters
@@ -20,5 +20,9 @@ protected
       flash[:notice] = "Please log in"
       redirect_to :controller => 'admin', :action => 'login'
     end
+  end
+
+  def logged_in_user?
+    !session[:user_id].nil?
   end
 end

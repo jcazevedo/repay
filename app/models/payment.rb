@@ -18,8 +18,6 @@ class Payment < ActiveRecord::Base
     pc = self.payment_components.find_by_user_id(user)
     if pc
       pc.paid += value
-      # TODO instead of checking the following, it would probably be a better
-      # idea to accumulate amounts given by other users.
       pc.paid = pc.value if pc.paid >= pc.value
       pc.save
     end
@@ -50,24 +48,13 @@ class Payment < ActiveRecord::Base
     return true
   end
 
-  def self.all_paid
-    result = []
-
-    Payment.find(:all).each do |payment|
-      result << payment if payment.paid?
+  def self.get_all(paid, not_paid)
+    @payments = Payment.find(:all, :order => 'created_at DESC')
+    @payments.each do |payment|
+      @payments.delete(payment) if ((payment.paid? and paid.nil?) or
+                                    (!payment.paid? and not_paid.nil?))
     end
-
-    result
-  end
-
-  def self.all_to_be_paid
-    result = []
-    
-    Payment.find(:all).each do |payment|
-      result << payment if !payment.paid?
-    end
-
-    result
+    @payments
   end
 
   def user_component(user)

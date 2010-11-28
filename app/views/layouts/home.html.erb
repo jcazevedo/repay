@@ -2,12 +2,19 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
   <head>
-    <title>HouseKeeper v0.1</title>
+    <title>HouseKeeper <%= HOUSEKEEPER_VERSION %></title>
     <%= stylesheet_link_tag "housekeeper", :media => "all" %>
+    <%= javascript_include_tag :defaults %>
   </head>
 
   <body>
     <div id="banner">
+      <div id="title">HouseKeeper <%= HOUSEKEEPER_VERSION %></div>
+      <div id="user_details">
+        <% if session[:user_id] %>
+        <%= link_to 'Logout', :controller => 'admin', :action => 'logout' %>
+        <% end %>
+      </div>
     </div>
     <div id="main">
       <%= yield :layout %>
