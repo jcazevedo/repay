@@ -1,6 +1,6 @@
 <table>
   <tr>
-    <th>Title</th>
+    <th>Name</th>
     <% @users.each do |user| %>
     <th><%= user.name %></th>
     <% end %>
@@ -9,6 +9,14 @@
   </tr>
   <tr>
     <% form_for :payment, :url => {:action => :save_payment} do |form| %>
+    <input type="hidden" 
+           id="paid" 
+           name="paid" 
+           value="<%= params[:paid] %>"/>
+    <input type="hidden" 
+           id="paid" 
+           name="not_paid" 
+           value="<%= params[:not_paid] %>"/>
     <%= form.hidden_field :user_id, :value => session[:user_id] %>
     <td><%= form.text_field :name, :size => 40 %></td>
     <% @users.each do |user| %>
@@ -16,8 +24,9 @@
                type="checkbox"
                name="payment[users][]"
                value="<%= user.id %>" 
-               checked="<%= 'yes' if !params[:payment].nil? and 
-                        params[:payment][:users].member? user.id %>"/></td>
+               checked="<%= 'yes' if (!params[:payment].nil? \
+                        and !params[:payment][:users].nil? \
+                        and params[:payment][:users].member? user.id) %>"/></td>
     <% end %>
     <td><%= form.text_field :value, :size => 10 %></td>
     <td><%= submit_tag "Add Payment", :class => "submit" %></td>

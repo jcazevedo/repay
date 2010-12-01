@@ -13,6 +13,8 @@
   <% end %>
 
   <div id="payments_table">
+    <%= error_messages_for 'payment' %>
+    
     <%= render(:partial => "payments", :object => @payments) %>
   </div>
 </div>

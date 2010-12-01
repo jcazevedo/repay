@@ -3,6 +3,8 @@ class Payment < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :name, :user_id
+  validate :validate_length_of_users,
+           :validate_numericality_of_value
 
   def value
     @value
@@ -71,5 +73,17 @@ class Payment < ActiveRecord::Base
 
   def user_component(user)
     self.payment_components.find_by_user_id(user.id)
+  end
+
+  private
+
+  def validate_length_of_users
+    errors.add(:users, 'should be at least one') if @users.nil? ||
+      @users.length == 0
+  end
+
+  def validate_numericality_of_value
+    errors.add(:value, 'should be a number greater than or equal to 0.01') if 
+      @value < 0.01
   end
 end
