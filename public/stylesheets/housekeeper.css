@@ -1,9 +1,82 @@
 body {
-  font-family: Verdana, Arial, Helvetica, sans-serif
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#banner {
+  border-bottom: 1px solid gray;
+  margin-bottom: 20px;
+}
+
+.housekeeper-form {
+  margin: auto;
+  width: 200px;
+}
+
+.housekeeper-form input[type=text], select {
+  display: block;
+}
+
+.housekeeper-form .submit {
+  margin-top: 20px;
+  float: right;
+}
+
+#payment_forms {
+  display: block;
+  margin: auto;
+  overflow: auto;
+  width: auto;
+}
+
+#filter_form {
+  display: inline;
+  float: left;
+  margin: 0px 20px;
+  height: 100%;
+  overflow: auto;
+}
+
+#amounts_form {
+  float: right;
+  margin: 0px 20px;
+  height: 100%;
+  overflow: auto;
+}
+
+#title h1 {
+  font-variant: small-caps;
+  padding: 0px;
+  margin: 0px;
+  display: inline;
+}
+
+#user_details {
+  display: inline;
+  float: right;
+  font-size: small;
+}
+
+#main {
+  display: block;
+  font-size: small;
+}
+
+#payments {
+  margin: 20px auto;
+}
+
+#payments table {
+  width: 100%;
+  border-spacing: 8px;
+}
+
+#payments table td.table-form-centered {
+  text-align: center;
 }
 
 #payments table td {
   border: 1px solid black;
+  padding: 4px;
 }
 
 #payments table td.paid {

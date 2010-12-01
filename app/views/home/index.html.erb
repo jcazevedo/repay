@@ -1,30 +1,43 @@
 <div id="payments">
-  <% form_tag(:action => 'index') do %>
-  <fieldset>
-    <legend>Filter</legend>
-    <div>
-      <%= check_box_tag 'paid', true, params[:paid] %>
-      <label for="paid">Paid</label>
-      <%= check_box_tag 'not_paid', true, params[:not_paid] %>
-      <label for="not_paid">Not paid</label>
-      <%= submit_tag "Filter" %>
-    </div>
-  </fieldset>
-  <% end %>
 
-  <div id="amounts_form">
-    <% form_tag(:action => 'update_amount') do %>
-    <%= hidden_field_tag 'paid', params[:paid] %>
-    <%= hidden_field_tag 'not_paid', params[:not_paid] %>
-    Got <%= text_field_tag 'value', '', :size => 10 %> 
-    from <%= select_tag 'user', options_from_collection_for_select(@users, :id, :name) %>
-    <%= submit_tag "Update" %>
-    <% end %>
+  <div id="payment_forms">
+
+    <div id="filter_form">
+      <% form_tag({:action => 'index'}, {:class => 'housekeeper-form'}) do %>
+      <fieldset>
+        <legend>Filter</legend>
+        <div>
+          <%= check_box_tag 'paid', true, params[:paid] %>
+          <label for="paid">Paid</label>
+          <%= check_box_tag 'not_paid', true, params[:not_paid] %>
+          <label for="not_paid">Not paid</label>
+          <%= submit_tag "Filter", :class => 'submit' %>
+        </div>
+      </fieldset>
+      <% end %>
+    </div>
+
+    <div id="amounts_form">
+      <% form_tag({:action => 'update_amount'}, {:class => 'housekeeper-form'}) do %>
+      <fieldset>
+        <legend>Update Amounts</legend>
+        <div>
+          <%= hidden_field_tag 'paid', params[:paid] %>
+          <%= hidden_field_tag 'not_paid', params[:not_paid] %>
+          <label for="value">Got</label>
+          <%= text_field_tag 'value', '', :size => 10 %>
+          <label for="user">from</label>
+          <%= select_tag 'user', 
+              options_from_collection_for_select(@users, :id, :name) %>
+          <%= submit_tag "Update", :class => 'submit' %>
+        <div>
+      </fieldset>
+      <% end %>
+    </div>
+
   </div>
 
   <div id="payments_table">
-    <%= error_messages_for 'payment' %>
-    
     <%= render(:partial => "payments", :object => @payments) %>
   </div>
 </div>

@@ -21,7 +21,7 @@
     <%= form.hidden_field :user_id, :value => session[:user_id] %>
     <td><%= form.text_field :name, :size => 20 %></td>
     <% @users.each do |user| %>
-    <td><input id="users" 
+    <td class="table-form-centered"><input id="users" 
                type="checkbox"
                name="payment[users][]"
                value="<%= user.id %>" 
@@ -31,7 +31,7 @@
     <% end %>
     <td><%= form.text_field :value, :size => 10 %></td>
     <td />
-    <td><%= submit_tag "Add Payment", :class => "submit" %></td>
+    <td class="table-form-centered"><%= submit_tag "Add Payment", :class => "submit" %></td>
     <% end %>
   </tr>
   <%= render(:partial => "payment", :collection => payments) %>

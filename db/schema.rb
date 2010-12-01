@@ -9,12 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101128162855) do
+ActiveRecord::Schema.define(:version => 20101201133103) do
+
+  create_table "credits", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "other_user_id"
+    t.decimal  "value",         :precision => 8, :scale => 2, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "payment_components", :force => true do |t|
     t.integer  "payment_id"
-    t.integer  "value",      :limit => 10, :precision => 10, :scale => 0
-    t.integer  "paid",       :limit => 10, :precision => 10, :scale => 0
+    t.decimal  "value",                    :precision => 8,  :scale => 2, :default => 0.0
+    t.decimal  "paid",                     :precision => 8,  :scale => 2, :default => 0.0
     t.integer  "user_id",    :limit => 10, :precision => 10, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"

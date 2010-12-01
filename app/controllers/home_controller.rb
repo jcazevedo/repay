@@ -4,7 +4,7 @@ class HomeController < ApplicationController
 
   def check_filters
     if !request.post? && (params[:paid].nil? && params[:not_paid].nil?)
-      params[:paid] = "true"
+      params[:paid] = "false"
       params[:not_paid] = "true"
     end
     params[:paid] = nil if params[:paid] != "true"

@@ -9,18 +9,15 @@
 
   <body>
     <div id="banner">
-      <div id="title">HouseKeeper <%= HOUSEKEEPER_VERSION %></div>
       <div id="user_details">
         <% if session[:user_id] %>
+        Logged in as <%= User.find(session[:user_id]).name %>. 
         <%= link_to 'Logout', :controller => 'admin', :action => 'logout' %>
         <% end %>
       </div>
+      <div id="title"><h1>HouseKeeper <%= HOUSEKEEPER_VERSION %></h1></div>
     </div>
     <div id="main">
-      <% if flash[:notice] -%>
-      <div id="notice"><%= flash[:notice] %></div>
-      <% end -%>
-
       <%= yield :layout %>
     </div>
     <div id="footer">
