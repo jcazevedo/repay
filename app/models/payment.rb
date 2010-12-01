@@ -105,8 +105,6 @@ class Payment < ActiveRecord::Base
           !payment.user_component(self.user).nil? && 
           !self.user_component(payment.user).nil?
 
-        puts payment.inspect
-
         pc = payment.user_component(self.user)
         this_pc = self.user_component(payment.user)
         if !pc.paid?
