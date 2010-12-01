@@ -12,6 +12,16 @@
   </fieldset>
   <% end %>
 
+  <div id="amounts_form">
+    <% form_tag(:action => 'update_amount') do %>
+    <%= hidden_field_tag 'paid', params[:paid] %>
+    <%= hidden_field_tag 'not_paid', params[:not_paid] %>
+    Got <%= text_field_tag 'value', '', :size => 10 %> 
+    from <%= select_tag 'user', options_from_collection_for_select(@users, :id, :name) %>
+    <%= submit_tag "Update" %>
+    <% end %>
+  </div>
+
   <div id="payments_table">
     <%= error_messages_for 'payment' %>
     

@@ -87,30 +87,32 @@ class Payment < ActiveRecord::Base
   end
 
   def update_related_components
-    payments = Payment.get_all(false, true).reverse!
-    val = self.payment_components.find_by_user_id(self.user_id).paid
-    payments.each do |payment|
-      # checks if the payment has a component for this payment's user and this
-      # payment has a component for the payment's user
-      if payment.user != self.user && 
-          !payment.user_component(self.user).nil? && 
-          !self.user_component(payment.user).nil?
+    if !self.payment_components.find_by_user_id(self.user_id).nil?
+      payments = Payment.get_all(false, true).reverse!
+      val = self.payment_components.find_by_user_id(self.user_id).paid
+      payments.each do |payment|
+        # checks if the payment has a component for this payment's user and this
+        # payment has a component for the payment's user
+        if payment.user != self.user && 
+            !payment.user_component(self.user).nil? && 
+            !self.user_component(payment.user).nil?
 
-        pc = payment.user_component(self.user)
-        this_pc = self.user_component(payment.user)
-        if !pc.paid?
-          pc.paid += val
-          this_pc.paid += val
-          val = 0
-          
-          if pc.paid >= pc.value
-            val += (pc.paid - pc.value)
-            this_pc.paid -= (pc.paid - pc.value)
-            pc.paid = pc.value
+          pc = payment.user_component(self.user)
+          this_pc = self.user_component(payment.user)
+          if !pc.paid?
+            pc.paid += val
+            this_pc.paid += val
+            val = 0
+            
+            if pc.paid >= pc.value
+              val += (pc.paid - pc.value)
+              this_pc.paid -= (pc.paid - pc.value)
+              pc.paid = pc.value
+            end
+
+            pc.save
+            this_pc.save
           end
-
-          pc.save
-          this_pc.save
         end
       end
     end

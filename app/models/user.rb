@@ -34,6 +34,20 @@ class User < ActiveRecord::Base
     user
   end
 
+  def update_amount(value)
+    self.payment_components.find(:all, :order => 'created_at ASC').each do |pc|
+      if !pc.paid?
+        pc.paid += value
+        value = 0
+        if pc.paid >= pc.value
+          value += (pc.paid - pc.value)
+          pc.paid = pc.value
+        end
+        pc.save
+      end
+    end
+  end
+
   private
 
   def password_non_blank
