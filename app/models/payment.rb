@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
   validate :validate_length_of_users,
            :validate_numericality_of_value
 
-  after_save :update_related_components
+  after_create :update_related_components
 
   def value
     @value = total
