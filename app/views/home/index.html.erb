@@ -43,7 +43,7 @@
     <% @users.each do |user| %>
     <% if user != current_user %>
     <b><%= number_to_currency(current_user.amount_owed_to(user), :unit => "&euro;") %></b> to
-    <b><%= user.name %></b>
+    <b><%= user.name %></b><br />
     <% end %>
     <% end %>
   </div>
