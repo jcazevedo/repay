@@ -39,11 +39,12 @@
 
   <div id="owes">
     <% current_user = User.find(session[:user_id]) %>
-    You owe:<br />
     <% @users.each do |user| %>
     <% if user != current_user %>
-    <b><%= number_to_currency(current_user.amount_owed_to(user), :unit => "&euro;") %></b> to
-    <b><%= user.name %></b><br />
+    You owe <b><%= number_to_currency(current_user.amount_owed_to(user), :unit => "&euro;") %></b> to
+    <b><%= user.name %></b> and he is owing you
+    <b><%= number_to_currency(user.amount_owed_to(current_user), :unit => "&euro;") %></b>
+    <br />
     <% end %>
     <% end %>
   </div>
