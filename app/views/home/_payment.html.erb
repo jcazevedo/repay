@@ -8,12 +8,14 @@
     <% else %>
   <td class="not_paid">
     <% end %>
-    <%= pu.paid %>/<%= pu.value %>
+    <%= number_to_currency(pu.paid, :unit => "&euro;") %> /
+    <%= number_to_currency(pu.value, :unit => "&euro;") %>
   </td>
   <% else %>
   <td>N/A</td>
   <% end %>
   <% end %>
-  <td><%= payment.total %></td>
+  <td><%= number_to_currency(payment.total, :unit => "&euro;") %></td>
+  <td><%= payment.created_at.strftime("%d/%m/%Y") %></td>
   <td />
 </tr>

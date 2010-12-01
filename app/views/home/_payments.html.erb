@@ -5,6 +5,7 @@
     <th><%= user.name %></th>
     <% end %>
     <th>Total</th>
+    <th>Date</th>
     <th />
   </tr>
   <tr>
@@ -29,6 +30,7 @@
                         and params[:payment][:users].member? user.id) %>"/></td>
     <% end %>
     <td><%= form.text_field :value, :size => 10 %></td>
+    <td />
     <td><%= submit_tag "Add Payment", :class => "submit" %></td>
     <% end %>
   </tr>
