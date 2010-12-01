@@ -25,15 +25,6 @@ class Payment < ActiveRecord::Base
     @users
   end
 
-  def add_amount(user, value)
-    pc = self.payment_components.find_by_user_id(user)
-    if pc
-      pc.paid += value
-      pc.paid = pc.value if pc.paid >= pc.value
-      pc.save
-    end
-  end
-
   def users=(users)
     @users = users
     vals = @value / @users.length
