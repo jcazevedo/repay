@@ -48,6 +48,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def amount_owed_to(user)
+    sum = 0.0
+    self.payment_components.each do |pc|
+      if !pc.paid? && pc.payment.user == user
+        sum += (pc.value - pc.paid)
+      end
+    end
+    sum
+  end
+
   private
 
   def password_non_blank
