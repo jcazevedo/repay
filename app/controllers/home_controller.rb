@@ -30,4 +30,13 @@ class HomeController < ApplicationController
       render :action => 'index'
     end
   end
+
+  def update_payment
+    @payment = Payment.find(params[:id])
+    if @payment.update_attributes(params[:payment])
+      redirect_to :action => 'index'
+    else
+      render :action => 'index'
+    end
+  end
 end

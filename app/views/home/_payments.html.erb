@@ -19,7 +19,7 @@
            name="not_paid" 
            value="<%= params[:not_paid] %>"/>
     <%= form.hidden_field :user_id, :value => session[:user_id] %>
-    <td><%= form.text_field :name, :size => 40 %></td>
+    <td><%= form.text_field :name, :size => 20 %></td>
     <% @users.each do |user| %>
     <td><input id="users" 
                type="checkbox"

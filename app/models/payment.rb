@@ -7,6 +7,7 @@ class Payment < ActiveRecord::Base
            :validate_numericality_of_value
 
   def value
+    @value = total
     @value
   end
 
@@ -15,6 +16,10 @@ class Payment < ActiveRecord::Base
   end
 
   def users
+    @users = []
+    self.payment_components.each do |pc|
+      @users << pc.user
+    end
     @users
   end
 
@@ -78,12 +83,12 @@ class Payment < ActiveRecord::Base
   private
 
   def validate_length_of_users
-    errors.add(:users, 'should be at least one') if @users.nil? ||
-      @users.length == 0
+    errors.add(:users, 'should be at least one') if users.nil? ||
+      users.length == 0
   end
 
   def validate_numericality_of_value
     errors.add(:value, 'should be a number greater than or equal to 0.01') if 
-      @value < 0.01
+      value < 0.01
   end
 end
