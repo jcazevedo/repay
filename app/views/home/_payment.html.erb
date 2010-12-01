@@ -34,7 +34,9 @@
   <% end %>
   <td><%= number_to_currency(payment.total, :unit => "&euro;") %></td>
   <td><%= payment.created_at.strftime("%d/%m/%Y") %></td>
-  <td><%= submit_tag "Update Payment", :class => "submit" %></td>
+  <td>
+    <%= submit_tag "Update Payment", :class => "submit" %>
+  </td>
   <% end %>
   <% else %>
   <td><%= payment.name %></td>

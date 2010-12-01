@@ -25,7 +25,9 @@ class HomeController < ApplicationController
   def save_payment
     @payment = Payment.new(params[:payment])
     if @payment.save
-      redirect_to :action => 'index'
+      redirect_to :action => 'index', 
+                  :paid => params[:paid], 
+                  :not_paid => params[:not_paid]
     else
       render :action => 'index'
     end
