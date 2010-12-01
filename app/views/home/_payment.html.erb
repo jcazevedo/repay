@@ -5,6 +5,14 @@
          id="id"
          name="id"
          value="<%= payment.id %>" />
+  <input type="hidden" 
+         id="paid" 
+         name="paid" 
+         value="<%= params[:paid] %>"/>
+  <input type="hidden" 
+         id="paid" 
+         name="not_paid" 
+         value="<%= params[:not_paid] %>"/>
   <td><%= form.text_field :name, :size => 20, :value => payment.name %></td>
   <% @users.each do |user| %>
   <% pu = payment.user_component(user) %>
