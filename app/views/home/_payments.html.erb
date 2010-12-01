@@ -1,5 +1,6 @@
 <table>
   <tr>
+    <th>Paid By</th>
     <th>Name</th>
     <% @users.each do |user| %>
     <th><%= user.name %></th>
@@ -9,6 +10,7 @@
     <th />
   </tr>
   <tr>
+    <td />
     <% form_for :payment, :url => {:action => :save_payment} do |form| %>
     <input type="hidden" 
            id="paid" 
