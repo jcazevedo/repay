@@ -34,9 +34,9 @@ class User < ActiveRecord::Base
     user
   end
 
-  def update_amount(value)
+  def update_amount(user, value)
     self.payment_components.find(:all, :order => 'created_at ASC').each do |pc|
-      if !pc.paid?
+      if pc.payment.user == user && !pc.paid?
         pc.paid += value
         value = 0
         if pc.paid >= pc.value

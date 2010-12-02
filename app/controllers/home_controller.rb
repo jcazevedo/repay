@@ -52,11 +52,12 @@ class HomeController < ApplicationController
   end
   
   def update_amount
+    current_user = User.find(session[:user_id])
     user = User.find(params[:user])
     amount = params[:value].to_f
 
     if user && amount
-      user.update_amount(amount)
+      user.update_amount(current_user, amount)
     end
 
     redirect_to :action => 'index', 
