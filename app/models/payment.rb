@@ -89,9 +89,9 @@ class Payment < ActiveRecord::Base
   def update_related_components
     if !self.payment_components.find_by_user_id(self.user_id).nil?
       payments = Payment.get_all(false, true).reverse!
-      val = self.payment_components.find_by_user_id(self.user_id).paid
       users = User.find(:all)
       users.each do |user|
+        val = self.payment_components.find_by_user_id(self.user_id).paid
         payments = []
         payments = user.payments if user != self.user
         payments.each do |payment|
