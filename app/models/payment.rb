@@ -87,19 +87,15 @@ class Payment < ActiveRecord::Base
   end
 
   def update_related_components
-    if !self.payment_components.find_by_user_id(self.user_id).nil?
-      payments = Payment.get_all(false, true).reverse!
-      users = User.find(:all)
-      users.each do |user|
-        val = self.payment_components.find_by_user_id(self.user_id).paid
-        payments = []
-        payments = user.payments if user != self.user
+    payments = Payment.get_all(false, true).reverse!
+    users = User.find(:all)
+    users.each do |user|
+      if user != self.user && !self.user_component(user).nil?
+        val = self.user_component(user).value - self.user_component(user).paid
+        payments = user.payments
         payments.each do |payment|
-          # checks if the payment has a component for this payment's user and this
-          # payment has a component for the payment's user
           if payment.user != self.user && 
               !payment.user_component(self.user).nil? && 
-              !self.user_component(payment.user).nil?
 
             pc = payment.user_component(self.user)
             this_pc = self.user_component(payment.user)

@@ -61,8 +61,8 @@ class HomeController < ApplicationController
     end
 
     redirect_to :action => 'index', 
-                 :paid => params[:paid], 
-                 :not_paid => params[:not_paid] 
+                :paid => params[:paid], 
+                :not_paid => params[:not_paid] 
   end
 
   private

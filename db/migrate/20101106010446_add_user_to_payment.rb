@@ -4,6 +4,6 @@ class AddUserToPayment < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :payments, :user
+    remove_column :payments, :user_id
   end
 end
