@@ -2,45 +2,16 @@ class Payment < ActiveRecord::Base
   has_many :payment_components
   belongs_to :user
 
+  attr_accessor :users, :value
+
   validates_presence_of :name, :user_id
-  validate :validate_length_of_users,
+  validate :validate_length_of_users, 
            :validate_numericality_of_value
 
-  after_create :update_related_components
+  after_create :create_payment_components, :update_related_components
 
   def value
-    @value = total
-    @value
-  end
-
-  def value=(value)
-    @value = value.to_f
-  end
-
-  def users
-    @users = []
-    self.payment_components.each do |pc|
-      @users << pc.user
-    end
-    @users
-  end
-
-  def users=(users)
-    @users = users
-    vals = @value / @users.length
-
-    @users.each do |user|
-      us = User.find(user)
-      if us == self.user
-        paid = vals
-      else
-        paid = 0
-      end
-      pcs = PaymentComponent.create(:value => vals,
-                                    :paid => paid,
-                                    :user => us)
-      self.payment_components << pcs
-    end
+    @value.to_f
   end
 
   def paid?
@@ -84,6 +55,23 @@ class Payment < ActiveRecord::Base
   def validate_numericality_of_value
     errors.add(:value, 'should be a number greater than or equal to 0.01') if 
       value < 0.01
+  end
+
+  def create_payment_components
+    vals = value / users.length
+
+    users.each do |user|
+      us = User.find(user)
+      if us == self.user
+        paid = vals
+      else
+        paid = 0
+      end
+      pcs = PaymentComponent.create(:value => vals,
+                                    :paid => paid,
+                                    :user => us)
+      self.payment_components << pcs
+    end
   end
 
   def update_related_components

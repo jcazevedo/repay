@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   before_filter :check_filters, :load_users, :load_payments
-  after_filter :delete_payment_components
 
   def check_filters
     if !request.post? && (params[:paid].nil? && params[:not_paid].nil?)
@@ -63,14 +62,5 @@ class HomeController < ApplicationController
     redirect_to :action => 'index', 
                 :paid => params[:paid], 
                 :not_paid => params[:not_paid] 
-  end
-
-  private
-  
-  # HACK!
-  def delete_payment_components
-    PaymentComponent.find_all_by_payment_id(nil).each do |pc|
-      pc.delete
-    end
   end
 end
