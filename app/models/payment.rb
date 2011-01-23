@@ -11,10 +11,7 @@ class Payment < ActiveRecord::Base
   after_create :create_payment_components, :update_related_components
 
   def paid?
-    self.payment_components.each do |pc|
-      return false if !pc.paid?
-    end
-    return true
+    paid == value
   end
 
   def self.get_all(paid, not_paid)
@@ -29,24 +26,34 @@ class Payment < ActiveRecord::Base
     payments_final
   end
 
-  def user_component(user)
-    self.payment_components.find_by_user_id(user.id)
+  def has_user_component?(user)
+    !get_user_component(user).nil?
   end
 
-  def user_component_value(user)
-    component = user_component(user)
+  def is_user_component_paid?(user)
+    if has_user_component?(user)
+      component = get_user_component(user)
+      return component.paid?
+    end
+
+    return false
+  end
+
+  def get_user_component_value(user)
+    component = get_user_component(user)
     component.value
-  end
-
-  def set_user_component_value(user, value)
-    component = user_component(user)
-    component.value = value
-    component.save
   end
 
   def update_user_component_value(user, value)
     set_user_component_value(user, value)
     self.update_paid
+  end
+
+  private
+
+  def validate_length_of_users
+    errors.add(:users, 'should be at least one') if users.nil? ||
+      users.length == 0
   end
 
   def update_paid
@@ -59,11 +66,16 @@ class Payment < ActiveRecord::Base
     self.save
   end
 
-  private
+  def get_user_component(user)
+    self.payment_components.find_by_user_id(user.id)
+  end
 
-  def validate_length_of_users
-    errors.add(:users, 'should be at least one') if users.nil? ||
-      users.length == 0
+  def set_user_component_value(user, value)
+    if has_user_component?(user)
+      component = get_user_component(user)
+      component.value = value
+      component.save
+    end
   end
 
   def create_payment_components
