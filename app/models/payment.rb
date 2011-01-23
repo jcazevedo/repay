@@ -11,7 +11,10 @@ class Payment < ActiveRecord::Base
   after_create :create_payment_components, :update_related_components
 
   def paid?
-    value == paid
+    self.payment_components.each do |pc|
+      return false if !pc.paid?
+    end
+    return true
   end
 
   def self.get_all(paid, not_paid)
@@ -31,12 +34,12 @@ class Payment < ActiveRecord::Base
   end
 
   def user_component_value(user)
-    component = self.user_component(user)
+    component = user_component(user)
     component.value
   end
 
   def set_user_component_value(user, value)
-    component = self.user_component(user)
+    component = user_component(user)
     component.value = value
     component.save
   end
@@ -74,7 +77,7 @@ class Payment < ActiveRecord::Base
         paid = 0
       end
 
-      self.create_payment_component(vals, paid, us)
+      create_payment_component(vals, paid, us)
     end
   end
 
