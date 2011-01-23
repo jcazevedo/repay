@@ -33,7 +33,7 @@
   <td>N/A</td>
   <% end %>
   <% end %>
-  <td><%= number_to_currency(payment.total, :unit => "&euro;") %></td>
+  <td><%= number_to_currency(payment.value, :unit => "&euro;") %></td>
   <td><%= payment.created_at.strftime("%d/%m/%Y") %></td>
   <td class="table-form-centered">
     <%= submit_tag "Update Payment", :class => "submit" %>
@@ -56,7 +56,7 @@
   <td>N/A</td>
   <% end %>
   <% end %>
-  <td><%= number_to_currency(payment.total, :unit => "&euro;") %></td>
+  <td><%= number_to_currency(payment.value, :unit => "&euro;") %></td>
   <td><%= payment.created_at.strftime("%d/%m/%Y") %></td>
   <td />
   <% end %>

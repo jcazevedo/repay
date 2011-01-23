@@ -4,33 +4,14 @@ class Payment < ActiveRecord::Base
 
   attr_accessor :users
 
-  validates_presence_of :name, :user_id
-  validate :validate_length_of_users, 
-           :validate_numericality_of_value
+  validates_presence_of :name, :user_id, :value
+  validates_numericality_of :value
+  validate :validate_length_of_users
 
   after_create :create_payment_components, :update_related_components
 
-  def value
-    @value.to_f
-  end
-
-  def value=(value)
-    @value = value
-  end
-
   def paid?
-    self.payment_components.each do |pc|
-      return false if !pc.paid?
-    end
-    return true
-  end
-
-  def total
-    sum = 0.0
-    self.payment_components.each do |pc|
-      sum += pc.value
-    end
-    sum
+    value == paid
   end
 
   def self.get_all(paid, not_paid)
@@ -49,16 +30,37 @@ class Payment < ActiveRecord::Base
     self.payment_components.find_by_user_id(user.id)
   end
 
+  def user_component_value(user)
+    component = self.user_component(user)
+    component.value
+  end
+
+  def set_user_component_value(user, value)
+    component = self.user_component(user)
+    component.value = value
+    component.save
+  end
+
+  def update_user_component_value(user, value)
+    set_user_component_value(user, value)
+    self.update_paid
+  end
+
+  def update_paid
+    self.paid = 0.0
+    
+    self.payment_components.each do |payment|
+      self.paid += self.payment_components.paid
+    end
+
+    self.save
+  end
+
   private
 
   def validate_length_of_users
     errors.add(:users, 'should be at least one') if users.nil? ||
       users.length == 0
-  end
-
-  def validate_numericality_of_value
-    errors.add(:value, 'should be a number greater than or equal to 0.01') if 
-      value < 0.01
   end
 
   def create_payment_components
@@ -71,11 +73,14 @@ class Payment < ActiveRecord::Base
       else
         paid = 0
       end
-      pcs = PaymentComponent.create(:value => vals,
-                                    :paid => paid,
-                                    :user => us)
-      self.payment_components << pcs
+
+      self.create_payment_component(vals, paid, us)
     end
+  end
+
+  def create_payment_component(value, paid, user)
+    pc = PaymentComponent.create(:value => value, :paid => paid, :user => user)
+    self.payment_components << pc
   end
 
   def update_related_components
@@ -83,7 +88,7 @@ class Payment < ActiveRecord::Base
     users = User.find(:all)
     users.each do |user|
       if user != self.user && !self.user_component(user).nil?
-        val = self.user_component(user).value - self.user_component(user).paid
+        val = self.user_component_value(user) - self.user_component_value(user)
         payments = user.payments
         payments.each do |payment|
           if payment.user != self.user && 
