@@ -2,7 +2,7 @@ class Payment < ActiveRecord::Base
   has_many :payment_components
   belongs_to :user
 
-  attr_accessor :users, :value
+  attr_accessor :users
 
   validates_presence_of :name, :user_id
   validate :validate_length_of_users, 
@@ -12,6 +12,10 @@ class Payment < ActiveRecord::Base
 
   def value
     @value.to_f
+  end
+
+  def value=(value)
+    @value = value
   end
 
   def paid?
