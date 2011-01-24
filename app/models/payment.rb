@@ -39,8 +39,8 @@ class Payment < ActiveRecord::Base
     return false
   end
 
-  def get_user_component_value(user)
-    component = get_user_component(user)
+  def user_component_value(user)
+    component = user_component(user)
     component.value
   end
 
@@ -66,13 +66,13 @@ class Payment < ActiveRecord::Base
     self.save
   end
 
-  def get_user_component(user)
+  def user_component(user)
     self.payment_components.find_by_user_id(user.id)
   end
 
   def set_user_component_value(user, value)
     if has_user_component?(user)
-      component = get_user_component(user)
+      component = user_component(user)
       component.value = value
       component.save
     end
