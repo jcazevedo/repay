@@ -1,11 +1,2 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# Credit fixture
 
-one:
-  user_id: 1
-  other_user_id: 1
-  value: 9.99
-
-two:
-  user_id: 1
-  other_user_id: 1
-  value: 9.99

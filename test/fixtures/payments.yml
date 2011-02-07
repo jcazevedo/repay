@@ -1,9 +1,2 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# Payment fixture
 
-one:
-  name: MyString
-  description: MyText
-
-two:
-  name: MyString
-  description: MyText
