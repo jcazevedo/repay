@@ -4,7 +4,7 @@ class CreatePaymentComponents < ActiveRecord::Migration
       t.integer :payment_id
       t.decimal :value, :precision => 8, :scale => 2, :default => 0
       t.decimal :paid, :precision => 8, :scale => 2, :default => 0
-      t.decimal :user_id
+      t.integer :user_id
 
       t.timestamps
     end

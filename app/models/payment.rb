@@ -1,3 +1,11 @@
+# The Payment class encapsulates the logic of a payment in the system.
+# 
+# It is composed of:
+# * name
+# * description
+# * name
+# * value
+# * paid
 class Payment < ActiveRecord::Base
   has_many :payment_components
   belongs_to :user
@@ -9,11 +17,47 @@ class Payment < ActiveRecord::Base
   validate :validate_length_of_users
 
   after_create :create_payment_components, :update_related_components
-
+  
+  # Checks if all PaymentComponent are paid.
   def paid?
     paid == value
   end
 
+  # Returns a boolean stating whether or not the User given as parameter has a
+  # PaymentComponent in the Payment.
+  def has_user_component?(user)
+    !user_component(user).nil?
+  end
+
+  # Returns a boolean stating whether or not the PaymentComponent for the User
+  # given as parameter is paid.
+  def is_user_component_paid?(user)
+    if has_user_component?(user)
+      component = user_component(user)
+      return component.paid?
+    end
+
+    return false
+  end
+
+  # Returns the value of the PaymentComponent for the User given as parameter
+  def user_component_value(user)
+    if has_user_component?(user)
+      component = user_component(user)
+      return component.value
+    end
+
+    return 0
+  end
+
+  # Updates the PaymentComponent for the User given as parameter with the given
+  # value.
+  def update_user_component_value(user, value)
+    set_user_component_value(user, value)
+    self.update_paid
+  end
+
+  # TODO refactor
   def self.get_all(paid, not_paid)
     payments = Payment.find(:all, :order => 'created_at DESC')
     payments_final = []
@@ -26,36 +70,16 @@ class Payment < ActiveRecord::Base
     payments_final
   end
 
-  def has_user_component?(user)
-    !get_user_component(user).nil?
-  end
-
-  def is_user_component_paid?(user)
-    if has_user_component?(user)
-      component = get_user_component(user)
-      return component.paid?
-    end
-
-    return false
-  end
-
-  def user_component_value(user)
-    component = user_component(user)
-    component.value
-  end
-
-  def update_user_component_value(user, value)
-    set_user_component_value(user, value)
-    self.update_paid
-  end
-
   private
 
+  # Validates if the users list is of length above 0.
   def validate_length_of_users
     errors.add(:users, 'should be at least one') if users.nil? ||
       users.length == 0
   end
 
+  # Updates the value of the paid attribute for the Payment, based on the paid
+  # values of PaymentComponent.
   def update_paid
     self.paid = 0.0
     
@@ -66,10 +90,13 @@ class Payment < ActiveRecord::Base
     self.save
   end
 
+  # Returns the PaymentComponent for the User given as parameter.
   def user_component(user)
     self.payment_components.find_by_user_id(user.id)
   end
 
+  # Sets the value of the PaymentComponent associated with the User given as
+  # parameter.
   def set_user_component_value(user, value)
     if has_user_component?(user)
       component = user_component(user)
@@ -78,8 +105,10 @@ class Payment < ActiveRecord::Base
     end
   end
 
+  # Creates PaymentComponent based on the value of the Payment and the list of
+  # Users associated with it.
   def create_payment_components
-    vals = value / users.length
+    vals = self.value / users.length
 
     users.each do |user|
       us = User.find(user)
@@ -89,15 +118,19 @@ class Payment < ActiveRecord::Base
         paid = 0
       end
 
-      create_payment_component(vals, paid, us)
+      create_payment_component(us, vals, paid)
     end
   end
 
-  def create_payment_component(value, paid, user)
+  # Creates a single PaymentComponent, for the User given as parameter, with the
+  # given value and paid status.
+  def create_payment_component(user, value, paid)
     pc = PaymentComponent.create(:value => value, :paid => paid, :user => user)
     self.payment_components << pc
   end
 
+  # Updates the list of PaymentComponent associated with a Payment after the
+  # creation of a Payment.
   def update_related_components
     payments = Payment.get_all(false, true).reverse!
     users = User.find(:all)
