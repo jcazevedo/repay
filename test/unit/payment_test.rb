@@ -46,41 +46,23 @@ class PaymentTest < ActiveSupport::TestCase
                               :user => users(:joao),
                               :users => all_users)
 
-    puts "Payment1:"
-    puts payment1.user_component_paid(users(:pacheco))
-    puts payment1.paid
-    puts payment1.value
-
     payment2 = Payment.create(:name => 'payment2',
                               :value => 2000,
                               :user => users(:pacheco),
                               :users => all_users)
-
-    payment1.reload
-    puts "Payment1:"
-    puts payment1.user_component_paid(users(:pacheco))
-    puts payment1.paid
-    puts payment1.value
 
     payment3 = Payment.create(:name => 'payment3',
                               :value => 2000,
                               :user => users(:telmo),
                               :users => all_users)
 
-    puts "Payment1:"
-    puts payment1.paid
-    puts payment1.value
-
     payment4 = Payment.create(:name => 'payment4',
                               :value => 2000,
                               :user => users(:simao),
                               :users => all_users)
 
-    puts "Payment1:"
-    puts payment1.paid
-    puts payment1.value
-
     [payment1, payment2, payment3, payment4].each do |payment|
+      payment.reload
       assert payment.paid?
       all_users.each do |user|
         assert payment.is_user_component_paid?(user)

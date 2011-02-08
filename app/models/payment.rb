@@ -20,7 +20,7 @@ class Payment < ActiveRecord::Base
   
   # Checks if all PaymentComponent are paid.
   def paid?
-    paid == value
+    return self.paid == self.value
   end
 
   # Returns a boolean stating whether or not the User given as parameter has a
@@ -97,8 +97,8 @@ class Payment < ActiveRecord::Base
       pc.reload # might be needed to avoid caching
       self.paid += pc.paid
     end
-
-    self.save
+    
+    self.save(false)
   end
 
   # Returns the PaymentComponent for the User given as parameter.
@@ -120,16 +120,17 @@ class Payment < ActiveRecord::Base
   # Users associated with it.
   def create_payment_components
     vals = self.value / users.length
+    cpaid = 0
 
     users.each do |user|
       us = User.find(user)
       if us == self.user
-        paid = vals
+        cpaid = vals
       else
-        paid = 0
+        cpaid = 0
       end
 
-      create_payment_component(us, vals, paid)
+      create_payment_component(us, vals, cpaid)
     end
 
     update_paid
@@ -137,8 +138,8 @@ class Payment < ActiveRecord::Base
 
   # Creates a single PaymentComponent, for the User given as parameter, with the
   # given value and paid status.
-  def create_payment_component(user, value, paid)
-    pc = PaymentComponent.create(:value => value, :paid => paid, :user => user)
+  def create_payment_component(user, value, cpaid)
+    pc = PaymentComponent.create(:value => value, :paid => cpaid, :user => user)
     self.payment_components << pc
   end
 
