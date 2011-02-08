@@ -84,5 +84,15 @@ class PaymentTest < ActiveSupport::TestCase
                               :users => [users(:joao)])
 
     assert_equal payment1.user_component_paid(users(:pacheco)), 250
+    assert_equal payment2.user_component_paid(users(:joao)), 250
+
+    payment3 = Payment.create(:name => "payment3",
+                              :value => 1000,
+                              :user => users(:pacheco),
+                              :users => all_users)
+
+    assert_equal payment1.user_component_paid(users(:pacheco)), 500
+    assert payment1.is_user_component_paid?(users(:pacheco))
+    assert_equal payment3.user_component_paid(users(:joao)), 250
   end
 end

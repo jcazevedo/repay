@@ -32,7 +32,7 @@ class Payment < ActiveRecord::Base
   # Returns a boolean stating whether or not the PaymentComponent for the User
   # given as parameter is paid.
   def is_user_component_paid?(user)
-    if has_user_component?(user)
+    if self.has_user_component?(user)
       return user_component(user).paid?
     end
 
@@ -41,7 +41,7 @@ class Payment < ActiveRecord::Base
 
   # Returns the value of the PaymentComponent for the User given as parameter.
   def user_component_value(user)
-    if has_user_component?(user)
+    if self.has_user_component?(user)
       component = user_component(user)
       return component.value
     end
@@ -52,7 +52,7 @@ class Payment < ActiveRecord::Base
   # Returns the paid amount of the PaymentComponent for the User given as
   # parameter.
   def user_component_paid(user)
-    if has_user_component?(user)
+    if self.has_user_component?(user)
       component = user_component(user)
       return component.paid
     end
