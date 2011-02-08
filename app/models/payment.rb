@@ -33,14 +33,13 @@ class Payment < ActiveRecord::Base
   # given as parameter is paid.
   def is_user_component_paid?(user)
     if has_user_component?(user)
-      component = user_component(user)
-      return component.paid?
+      return user_component(user).paid?
     end
 
     return false
   end
 
-  # Returns the value of the PaymentComponent for the User given as parameter
+  # Returns the value of the PaymentComponent for the User given as parameter.
   def user_component_value(user)
     if has_user_component?(user)
       component = user_component(user)
@@ -50,11 +49,22 @@ class Payment < ActiveRecord::Base
     return 0
   end
 
+  # Returns the paid amount of the PaymentComponent for the User given as
+  # parameter.
+  def user_component_paid(user)
+    if has_user_component?(user)
+      component = user_component(user)
+      return component.paid
+    end
+
+    return 0
+  end
+
   # Updates the PaymentComponent for the User given as parameter with the given
   # value.
-  def update_user_component_value(user, value)
-    set_user_component_value(user, value)
-    self.update_paid
+  def update_user_component_paid(user, value)
+    set_user_component_paid(user, value)
+    update_paid
   end
 
   # TODO refactor
@@ -83,8 +93,9 @@ class Payment < ActiveRecord::Base
   def update_paid
     self.paid = 0.0
     
-    self.payment_components.each do |payment|
-      self.paid += self.payment_components.paid
+    self.payment_components.each do |pc|
+      pc.reload # might be needed to avoid caching
+      self.paid += pc.paid
     end
 
     self.save
@@ -97,10 +108,10 @@ class Payment < ActiveRecord::Base
 
   # Sets the value of the PaymentComponent associated with the User given as
   # parameter.
-  def set_user_component_value(user, value)
+  def set_user_component_paid(user, val)
     if has_user_component?(user)
       component = user_component(user)
-      component.value = value
+      component.paid = val
       component.save
     end
   end
@@ -120,6 +131,8 @@ class Payment < ActiveRecord::Base
 
       create_payment_component(us, vals, paid)
     end
+
+    update_paid
   end
 
   # Creates a single PaymentComponent, for the User given as parameter, with the
@@ -135,28 +148,28 @@ class Payment < ActiveRecord::Base
     payments = Payment.get_all(false, true).reverse!
     users = User.find(:all)
     users.each do |user|
-      if user != self.user && !self.user_component(user).nil?
-        val = self.user_component_value(user) - self.user_component_value(user)
+      if user != self.user && has_user_component?(user)
+        val = user_component_value(user) - user_component_paid(user)
         payments = user.payments
         payments.each do |payment|
-          if payment.user != self.user && 
-              !payment.user_component(self.user).nil? && 
+          if payment.user != self.user && payment.has_user_component?(self.user)
+            pc_paid = payment.user_component_paid(self.user)
+            pc_value = payment.user_component_value(self.user)
+            this_pc_paid = user_component_paid(payment.user)
 
-            pc = payment.user_component(self.user)
-            this_pc = self.user_component(payment.user)
-            if !pc.paid?
-              pc.paid += val
-              this_pc.paid += val
+            if !payment.is_user_component_paid?(self.user)
+              pc_paid += val
+              this_pc_paid += val
               val = 0
               
-              if pc.paid >= pc.value
-                val += (pc.paid - pc.value)
-                this_pc.paid -= (pc.paid - pc.value)
-                pc.paid = pc.value
+              if pc_paid >= pc_value
+                val += (pc_paid - pc_value)
+                this_pc_paid -= pc_paid - pc_value
+                pc_paid = pc_value
               end
 
-              pc.save
-              this_pc.save
+              payment.update_user_component_paid(self.user, pc_paid)
+              update_user_component_paid(payment.user, this_pc_paid)
             end
           end
         end

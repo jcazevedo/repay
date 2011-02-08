@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(:version => 20110123170757) do
 
   create_table "payment_components", :force => true do |t|
     t.integer  "payment_id"
-    t.decimal  "value",                    :precision => 8,  :scale => 2, :default => 0.0
-    t.decimal  "paid",                     :precision => 8,  :scale => 2, :default => 0.0
-    t.integer  "user_id",    :limit => 10, :precision => 10, :scale => 0
+    t.decimal  "value",      :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "paid",       :precision => 8, :scale => 2, :default => 0.0
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
