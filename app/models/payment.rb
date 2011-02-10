@@ -69,17 +69,18 @@ class Payment < ActiveRecord::Base
     end
   end
 
-  # TODO refactor
-  def self.get_all(paid, not_paid)
-    payments = Payment.find(:all, :order => 'created_at DESC')
-    payments_final = []
-    payments.each do |payment|
-      if (payment.paid? and paid) or
-          (!payment.paid? and not_paid)
-        payments_final << payment
-      end
-    end
-    payments_final
+  # Returns all Payment objects that are paid.
+  def self.all_paid
+    Payment.find(:all,
+                 :conditions => "paid == value",
+                 :order => "created_at DESC")
+  end
+
+  # Returns all Payment objects that are not paid.
+  def self.all_not_paid
+    Payment.find(:all,
+                 :conditions => "paid != value",
+                 :order => "created_at DESC")
   end
 
   private
@@ -148,7 +149,7 @@ class Payment < ActiveRecord::Base
   # Updates the list of PaymentComponent associated with a Payment after the
   # creation of a Payment.
   def update_related_components
-    payments = Payment.get_all(false, true).reverse!
+    payments = Payment.all_not_paid.reverse!
     users = User.find(:all)
     users.each do |user|
       if user != self.user && self.has_user_component?(user)
