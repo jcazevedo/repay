@@ -65,7 +65,7 @@ class PaymentTest < ActiveSupport::TestCase
       payment.reload
       assert payment.paid?
       all_users.each do |user|
-        assert payment.is_user_component_paid?(user)
+        assert payment.user_component_paid?(user)
       end
     end
   end
@@ -92,7 +92,78 @@ class PaymentTest < ActiveSupport::TestCase
                               :users => all_users)
 
     assert_equal payment1.user_component_paid(users(:pacheco)), 500
-    assert payment1.is_user_component_paid?(users(:pacheco))
+    assert payment1.user_component_paid?(users(:pacheco))
     assert_equal payment3.user_component_paid(users(:joao)), 250
+
+    payment4 = Payment.create(:name => "payment4",
+                              :value => 3000,
+                              :user => users(:telmo),
+                              :users => [users(:joao),
+                                         users(:telmo),
+                                         users(:simao)])
+
+    assert_equal payment4.user_component_paid(users(:joao)), 500
+    assert_equal payment1.user_component_paid(users(:telmo)), 500
+
+    payment5 = Payment.create(:name => "payment5",
+                              :value => 250,
+                              :user => users(:joao),
+                              :users => [users(:telmo)])
+
+    assert_equal payment5.user_component_paid(users(:telmo)), 250
+    assert_equal payment4.user_component_paid(users(:joao)), 750
+
+    payment6 = Payment.create(:name => "payment6",
+                              :value => 500,
+                              :user => users(:simao),
+                              :users => [users(:joao)])
+
+    assert_equal payment1.user_component_paid(users(:simao)), 500
+    assert_equal payment6.user_component_paid(users(:joao)), 500
+
+    payment7 = Payment.create(:name => "payment7",
+                              :value => 250,
+                              :user => users(:simao),
+                              :users => [users(:pacheco)])
+
+    assert_equal payment3.user_component_paid(users(:simao)), 250
+    assert_equal payment7.user_component_paid(users(:pacheco)), 250
+
+    payment8 = Payment.create(:name => "payment8",
+                              :value => 1000,
+                              :user => users(:simao),
+                              :users => [users(:telmo)])
+    
+    assert_equal payment4.user_component_paid(users(:simao)), 1000
+    assert_equal payment8.user_component_paid(users(:telmo)), 1000
+
+    payment9 = Payment.create(:name => "payment9",
+                              :value => 250,
+                              :user => users(:joao),
+                              :users => [users(:telmo)])
+    
+    assert_equal payment9.user_component_paid(users(:telmo)), 250
+    assert_equal payment4.user_component_paid(users(:joao)), 1000
+
+    payment10 = Payment.create(:name => "payment10",
+                               :value => 250,
+                               :user => users(:telmo),
+                               :users => [users(:pacheco)])
+
+    assert_equal payment3.user_component_paid(users(:telmo)), 250
+    assert_equal payment10.user_component_paid(users(:pacheco)), 250
+
+    [payment1,
+     payment2,
+     payment3,
+     payment4,
+     payment5,
+     payment6,
+     payment7,
+     payment8,
+     payment9].each do |payment|
+      payment.reload
+      assert payment.paid?
+    end
   end
 end

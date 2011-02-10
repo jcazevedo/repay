@@ -31,7 +31,7 @@ class Payment < ActiveRecord::Base
 
   # Returns a boolean stating whether or not the PaymentComponent for the User
   # given as parameter is paid.
-  def is_user_component_paid?(user)
+  def user_component_paid?(user)
     if self.has_user_component?(user)
       return user_component(user).paid?
     end
@@ -63,8 +63,10 @@ class Payment < ActiveRecord::Base
   # Updates the PaymentComponent for the User given as parameter with the given
   # value.
   def update_user_component_paid(user, value)
-    set_user_component_paid(user, value)
-    update_paid
+    Payment.transaction do
+      set_user_component_paid(user, value)
+      update_paid
+    end
   end
 
   # TODO refactor
@@ -149,16 +151,16 @@ class Payment < ActiveRecord::Base
     payments = Payment.get_all(false, true).reverse!
     users = User.find(:all)
     users.each do |user|
-      if user != self.user && has_user_component?(user)
-        val = user_component_value(user) - user_component_paid(user)
+      if user != self.user && self.has_user_component?(user)
+        val = self.user_component_value(user) - self.user_component_paid(user)
         payments = user.payments
         payments.each do |payment|
           if payment.user != self.user && payment.has_user_component?(self.user)
             pc_paid = payment.user_component_paid(self.user)
             pc_value = payment.user_component_value(self.user)
-            this_pc_paid = user_component_paid(payment.user)
+            this_pc_paid = self.user_component_paid(payment.user)
 
-            if !payment.is_user_component_paid?(self.user)
+            if !payment.user_component_paid?(self.user)
               pc_paid += val
               this_pc_paid += val
               val = 0
@@ -170,7 +172,7 @@ class Payment < ActiveRecord::Base
               end
 
               payment.update_user_component_paid(self.user, pc_paid)
-              update_user_component_paid(payment.user, this_pc_paid)
+              self.update_user_component_paid(payment.user, this_pc_paid)
             end
           end
         end
