@@ -44,17 +44,16 @@ class User < ActiveRecord::Base
     user
   end
 
-  # Updates all PaymentComponent for a user who has received the given value.
+  # Updates all amounts owed to user with the given value.
   def update_amount(user, value)
-    self.payment_components.find(:all, :order => 'created_at ASC').each do |pc|
-      if pc.payment.user == user && !pc.paid?
-        pc.paid += value
-        value = 0
-        if pc.paid >= pc.value
-          value += (pc.paid - pc.value)
-          pc.paid = pc.value
-        end
-        pc.save
+    Payment.all_not_paid.each do |payment|
+      break if value <= 0
+      if payment.user == user
+        to_pay = payment.user_component_owed(self)
+        to_pay = value if value < to_pay
+        payment.add_to_user_component_paid(self, to_pay)
+
+        value -= to_pay
       end
     end
   end

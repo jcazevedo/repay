@@ -75,6 +75,13 @@ class Payment < ActiveRecord::Base
     end
   end
 
+  # Adds the value given as parameter to the paid value of the PaymentComponent
+  # of the User.
+  def add_to_user_component_paid(user, value)
+    current = self.user_component_paid(user)
+    update_user_component_paid(user, value + current)
+  end
+
   # Returns all Payment objects that are paid.
   def self.all_paid
     Payment.find(:all,
