@@ -60,6 +60,12 @@ class Payment < ActiveRecord::Base
     return 0
   end
 
+  # Returns the amount owed by the User given as parameter to the owner of the
+  # Payment.
+  def user_component_owed(user)
+    return self.user_component_value(user) - self.user_component_paid(user)
+  end
+
   # Updates the PaymentComponent for the User given as parameter with the given
   # value.
   def update_user_component_paid(user, value)
@@ -122,7 +128,7 @@ class Payment < ActiveRecord::Base
   # Creates PaymentComponent based on the value of the Payment and the list of
   # Users associated with it.
   def create_payment_components
-    vals = self.value / users.length
+    vals = self.value / self.users.length
     cpaid = 0
 
     users.each do |user|
