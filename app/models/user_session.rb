@@ -5,8 +5,8 @@
 # * paid
 # * not_paid
 class UserSession
-  attr_accessor :user
-                :paid
+  attr_accessor :user,
+                :paid,
                 :not_paid
 
   def load_paid?

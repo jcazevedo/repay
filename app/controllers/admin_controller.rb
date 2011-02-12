@@ -5,7 +5,7 @@ class AdminController < ApplicationController
     if request.post?
       user = User.authenticate(params[:name], params[:password])
       if user
-        session[:user_id] = user.id
+        set_up_user_session(user.id)
         redirect_to(:controller => "home")
       else
         flash.now[:notice] = "Invalid user/password combination"
@@ -14,7 +14,7 @@ class AdminController < ApplicationController
   end
 
   def logout
-    session[:user_id] = nil
+    delete_user_session
     redirect_to :action => 'login'
   end
 end

@@ -18,9 +18,10 @@ class ApplicationController < ActionController::Base
 
   # Sets up a new UserSession from a given user_id.
   def set_up_user_session(user_id)
-    session[:user_session] = UserSession.new(:user => User.find(user_id),
-                                             :paid => false,
-                                             :not_paid => true)
+    session[:user_session] = UserSession.new
+    session[:user_session].user = User.find(user_id)
+    session[:user_session].paid = false
+    session[:user_session].not_paid = true
   end
 
   # Deletes the current UserSession.
