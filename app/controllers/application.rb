@@ -14,15 +14,39 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
 
-protected
+  protected
+
+  # Sets up a new session from a given user_id.
+  def set_up_user_session(user_id)
+    session[:user_session] = UserSession.new(:user => User.find(user_id),
+                                             :paid => false,
+                                             :not_paid => true)
+  end
+
+  def delete_user_session
+    session[:user_session] = nil
+  end
+
+  def current_user
+    return session[:user_session].user if !session[:user_session].nil?
+  end
+
+  def load_paid_payments?
+    return session[:user_session].load_paid?
+  end
+
+  def load_not_paid_payments?
+    return session[:user_session].load_not_paid?
+  end
+
   def authorize
-    unless User.find_by_id(session[:user_id])
+    unless user_logged_in?
       flash[:notice] = "Please log in"
       redirect_to :controller => 'admin', :action => 'login'
     end
   end
 
-  def logged_in_user?
-    !session[:user_id].nil?
+  def user_logged_in?
+    return !session[:user_session].nil? && !session[:user_session].user.nil?
   end
 end
