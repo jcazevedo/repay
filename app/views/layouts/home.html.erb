@@ -18,6 +18,11 @@
       <div id="title"><h1>HouseKeeper <%= HOUSEKEEPER_VERSION %></h1></div>
     </div>
     <div id="main">
+      <% if flash[:notice] %>
+        <div id="notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end -%>
       <%= yield :layout %>
     </div>
     <div id="footer">

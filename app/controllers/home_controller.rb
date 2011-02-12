@@ -15,7 +15,8 @@ class HomeController < ApplicationController
   end
 
   def load_payments
-    @payments = Payment.get_all(params[:paid], params[:not_paid])
+#    @payments = Payment.get_all(params[:paid], params[:not_paid])
+    @payments = []
   end
 
   def index
