@@ -1,24 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test "invalid_with_empty_attributes" do
-    payment = Payment.new
-    assert !payment.valid?
-
-    assert payment.errors.invalid?(:name)
-    assert payment.errors.invalid?(:user_id)
-    assert payment.errors.invalid?(:users)
-  end
-
-  test "positive value" do
-    payment = Payment.new(:name => 'payment',
-                          :user => users(:joao),
-                          :value => -0.5)
-    assert !payment.valid?
-    assert payment.errors.invalid?(:value)
-  end
-
-  test "amount_owed" do
+  test "amount owed" do
     Payment.create(:name => 'payment1',
                    :value => 2000,
                    :user => users(:joao),
@@ -45,7 +28,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:simao).amount_owed_to(users(:telmo)), 100
   end
 
-  test "update_amount" do
+  test "update amount" do
     Payment.create(:name => 'payment1',
                    :value => 2000,
                    :user => users(:joao),

@@ -1,7 +1,24 @@
 require 'test_helper'
 
 class PaymentTest < ActiveSupport::TestCase
-  test "create_payment_components" do
+  test "invalid with empty attributes" do
+    payment = Payment.new
+    assert !payment.valid?
+
+    assert payment.errors.invalid?(:name)
+    assert payment.errors.invalid?(:user_id)
+    assert payment.errors.invalid?(:users)
+  end
+
+  test "positive value" do
+    payment = Payment.new(:name => 'payment',
+                          :user => users(:joao),
+                          :value => -0.5)
+    assert !payment.valid?
+    assert payment.errors.invalid?(:value)
+  end
+
+  test "create payment components" do
     payment = Payment.create(:name => 'payment',
                              :value => 2000,
                              :user => users(:joao),
@@ -13,7 +30,7 @@ class PaymentTest < ActiveSupport::TestCase
     assert !payment.has_user_component?(users(:simao))
   end
 
-  test "payment_component_values" do
+  test "payment component values" do
     payment = Payment.create(:name => 'payment',
                              :value => 2000,
                              :user => users(:joao),
@@ -25,7 +42,7 @@ class PaymentTest < ActiveSupport::TestCase
     assert_equal payment.user_component_paid(users(:pacheco)), 0
   end
 
-  test "payment_component_updates" do
+  test "payment component updates" do
     payment = Payment.create(:name => 'payment',
                              :value => 2000,
                              :user => users(:joao),
@@ -38,7 +55,7 @@ class PaymentTest < ActiveSupport::TestCase
     assert payment.paid?
   end
 
-  test "update_related_components_simple" do
+  test "update related components simple" do
     all_users = [users(:joao), users(:pacheco), users(:telmo), users(:simao)]
 
     payment1 = Payment.create(:name => 'payment1',
@@ -70,7 +87,7 @@ class PaymentTest < ActiveSupport::TestCase
     end
   end
 
-  test "update_related_components_partial" do
+  test "update related components partial" do
     all_users = [users(:joao), users(:pacheco), users(:telmo), users(:simao)]
 
     payment1 = Payment.create(:name => 'payment1',
