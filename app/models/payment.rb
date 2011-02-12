@@ -10,13 +10,23 @@ class Payment < ActiveRecord::Base
   has_many :payment_components
   belongs_to :user
 
-  attr_accessor :users
+  attr_writer :users
 
   validates_presence_of :name, :user_id, :value
   validates_numericality_of :value
   validate :validate_length_of_users, :value_must_be_at_least_a_cent
 
   after_create :create_payment_components, :update_related_components
+
+  # Returns the list of users with components in the Payment.
+  def users
+    return @users if @users
+    @users = []
+    self.payment_components.each do |pc|
+      @users << pc.user
+    end
+    return @users
+  end
   
   # Checks if all PaymentComponent are paid.
   def paid?
