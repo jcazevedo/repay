@@ -10,6 +10,14 @@ class UserTest < ActiveSupport::TestCase
     assert payment.errors.invalid?(:users)
   end
 
+  test "positive value" do
+    payment = Payment.new(:name => 'payment',
+                          :user => users(:joao),
+                          :value => -0.5)
+    assert !payment.valid?
+    assert payment.errors.invalid?(:value)
+  end
+
   test "amount_owed" do
     Payment.create(:name => 'payment1',
                    :value => 2000,

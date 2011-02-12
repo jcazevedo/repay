@@ -14,7 +14,7 @@ class Payment < ActiveRecord::Base
 
   validates_presence_of :name, :user_id, :value
   validates_numericality_of :value
-  validate :validate_length_of_users
+  validate :validate_length_of_users, :value_must_be_at_least_a_cent
 
   after_create :create_payment_components, :update_related_components
   
@@ -102,6 +102,11 @@ class Payment < ActiveRecord::Base
   def validate_length_of_users
     errors.add(:users, 'should be at least one') if users.nil? ||
       users.length == 0
+  end
+
+  # Creates an error in case the value field is below 0.01.
+  def value_must_be_at_least_a_cent
+    errors.add(:value, 'should be at least 0.01') if value.nil? || value < 0.01
   end
 
   # Updates the value of the paid attribute for the Payment, based on the paid
