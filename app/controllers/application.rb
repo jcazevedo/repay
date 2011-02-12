@@ -36,12 +36,12 @@ class ApplicationController < ActionController::Base
 
   # Defines whether or not paid Payments shall be loaded.
   def load_paid_payments?
-    return session[:user_session].load_paid?
+    return session[:user_session].paid == true
   end
 
   # Defines whether or not not paid Payments shall be loaded.
   def load_not_paid_payments?
-    return session[:user_session].load_not_paid?
+    return session[:user_session].not_paid == true
   end
 
   # Defines redirection based on the login status.
