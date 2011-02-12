@@ -1,6 +1,38 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+  test "invalid with empty attributes" do
+    user = User.new
+    
+    assert !user.valid?
+    assert user.errors.invalid?(:name)
+  end
+
+  test "repeated usernames" do
+    user1 = User.new(:name => 'User1',
+                     :username => 'user',
+                     :password => 'password',
+                     :password_confirmation => 'password')
+    assert user1.valid?
+    user1.save
+
+    user2 = User.new(:name => 'User2',
+                     :username => 'user',
+                     :password => 'password',
+                     :password_confirmation => 'password')
+    assert !user2.valid?
+    assert user2.errors.invalid?(:username)
+  end
+
+  test "password confirmation" do
+    user = User.new(:name => 'User',
+                    :username => 'user',
+                    :password => 'password1',
+                    :password_confirmation => 'password2')
+    assert !user.valid?
+    assert user.errors.invalid?(:password)
+  end
+
   test "amount owed" do
     Payment.create(:name => 'payment1',
                    :value => 2000,

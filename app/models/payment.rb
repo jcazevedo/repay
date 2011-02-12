@@ -7,20 +7,25 @@
 # * value
 # * paid
 class Payment < ActiveRecord::Base
-  has_many :payment_components
+  has_many   :payment_components
   belongs_to :user
 
   attr_writer :users
 
-  validates_presence_of :name, :user_id, :value
+  validates_presence_of     :name,
+                            :user_id,
+                            :value
   validates_numericality_of :value
-  validate :validate_length_of_users, :value_must_be_at_least_a_cent
+  validate                  :validate_length_of_users,
+                            :value_must_be_at_least_a_cent
 
-  after_create :create_payment_components, :update_related_components
+  after_create :create_payment_components,
+               :update_related_components
 
   # Returns the list of users with components in the Payment.
   def users
     return @users if @users
+
     @users = []
     self.payment_components.each do |pc|
       @users << pc.user
@@ -110,7 +115,7 @@ class Payment < ActiveRecord::Base
 
   # Validates if the users list is of length above 0.
   def validate_length_of_users
-    errors.add(:users, 'should be at least one') if users.nil? ||
+    errors.add(:users, 'should be at least 1') if users.nil? ||
       users.length == 0
   end
 

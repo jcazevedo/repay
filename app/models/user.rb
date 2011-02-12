@@ -8,21 +8,17 @@ require 'digest/sha1'
 # * hashed_password
 # * salt
 class User < ActiveRecord::Base
-  validates_presence_of   :name
-  validates_uniqueness_of :name
-
-  attr_accessor :password_confirmation
-  validates_confirmation_of :password
-
-  validate :password_non_blank
-
   has_many :payments
   has_many :payment_components
 
-  # Returns the user password.
-  def password
-    @password
-  end
+  attr_accessor :password_confirmation
+  attr_reader   :password
+
+  validates_presence_of     :name,
+                            :username
+  validates_uniqueness_of   :username
+  validates_confirmation_of :password
+  validate                  :password_non_blank
 
   # Sets the user password.
   def password=(pwd)
