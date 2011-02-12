@@ -13,9 +13,18 @@ class PaymentTest < ActiveSupport::TestCase
   test "positive value" do
     payment = Payment.new(:name => 'payment',
                           :user => users(:joao),
+                          :users => [users(:joao), users(:pacheco)],
                           :value => -0.5)
     assert !payment.valid?
     assert payment.errors.invalid?(:value)
+  end
+
+  test "users length" do
+    payment = Payment.new(:name => 'payment',
+                          :user => users(:joao),
+                          :value => 200)
+    assert !payment.valid?
+    assert payment.errors.invalid?(:users)
   end
 
   test "create payment components" do
