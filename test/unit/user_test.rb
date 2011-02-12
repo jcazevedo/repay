@@ -9,9 +9,9 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "repeated usernames" do
-    user1 = User.new(:name => 'User1',
-                     :username => 'user',
-                     :password => 'password',
+    user1 = User.new(:name                  => 'User1',
+                     :username              => 'user',
+                     :password              => 'password',
                      :password_confirmation => 'password')
     assert user1.valid?
     user1.save
