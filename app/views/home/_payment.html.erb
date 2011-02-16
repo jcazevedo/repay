@@ -1,33 +1,24 @@
 <tr>
   <td><%= payment.user.name %></td>
-  <% if payment.user_id == session[:user_id] %>
+  <% if payment.user_id == @session.user.id %>
   <% form_for :payment, :url => {:action => :update_payment} do |form| %>
   <input type="hidden"
          id="id"
          name="id"
          value="<%= payment.id %>" />
-  <input type="hidden" 
-         id="paid" 
-         name="paid" 
-         value="<%= params[:paid] %>"/>
-  <input type="hidden" 
-         id="paid" 
-         name="not_paid" 
-         value="<%= params[:not_paid] %>"/>
   <td><%= form.text_field :name, :size => 20, :value => payment.name %></td>
   <% @users.each do |user| %>
-  <% pu = payment.user_component(user) %>
-  <% if pu %>
-  <% if pu.paid? %>
+  <% if payment.has_user_component?(user) %>
+  <% if payment.user_component_paid?(user) %>
   <td class="paid">
     <% else %>
   <td class="not_paid">
     <% end %>
     <input id="pc"
            size="5"
-           name="payment_components[<%= pu.id %>][paid]"
-           value="<%= pu.paid %>"/> /
-    <%= number_to_currency(pu.value, :unit => "&euro;") %>
+           name="payment_components[<%= payment.id %>][paid]"
+           value="<%= payment.user_component_paid(user) %>"/> /
+    <%= number_to_currency(payment.user_component_value(user), :unit => "&euro;") %>
   </td>
     <% else %>
   <td>N/A</td>

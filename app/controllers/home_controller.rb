@@ -11,6 +11,13 @@ class HomeController < ApplicationController
     @payments += Payment.all_paid if load_paid_payments?
   end
 
+  def update_filters
+    update_load_paid_flag(params[:paid] || false)
+    update_load_not_paid_flag(params[:not_paid] || false)
+
+    redirect_to :action => 'index'
+  end
+
   def index
     @payment = Payment.new
   end

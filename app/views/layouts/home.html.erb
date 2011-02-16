@@ -11,7 +11,7 @@
     <div id="banner">
       <div id="user_details">
         <% if session[:user_id] %>
-        Logged in as <%= User.find(session[:user_id]).name %>. 
+        Logged in as <%= @session.user.name %>. 
         <%= link_to 'Logout', :controller => 'admin', :action => 'logout' %>
         <% end %>
       </div>

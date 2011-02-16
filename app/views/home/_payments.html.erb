@@ -12,15 +12,7 @@
   <tr>
     <td />
     <% form_for :payment, :url => {:action => :save_payment} do |form| %>
-    <input type="hidden" 
-           id="paid" 
-           name="paid" 
-           value="<%= params[:paid] %>"/>
-    <input type="hidden" 
-           id="paid" 
-           name="not_paid" 
-           value="<%= params[:not_paid] %>"/>
-    <%= form.hidden_field :user_id, :value => session[:user_id] %>
+    <%= form.hidden_field :user_id, :value => @session.user.id %>
     <td><%= form.text_field :name, :size => 20 %></td>
     <% @users.each do |user| %>
     <td class="table-form-centered"><input id="users" 

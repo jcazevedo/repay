@@ -3,18 +3,22 @@
   <div id="payment_forms">
 
     <div id="filter_form">
-      <% form_tag({:action => 'index'}, {:class => 'housekeeper-form'}) do %>
+      <% form_tag({:action => 'update_filters'},
+                  {:class => 'housekeeper-form'}) do %>
       <fieldset>
         <legend>Filter</legend>
         <div>
-          <%= check_box_tag 'paid', true, params[:paid] %>
+          <%= check_box_tag 'paid', true, @session.load_paid? %>
           <label for="paid">Paid</label>
-          <%= check_box_tag 'not_paid', true, params[:not_paid] %>
+
+          <%= check_box_tag 'not_paid', true, @session.load_not_paid? %>
           <label for="not_paid">Not paid</label>
+
           <%= submit_tag "Filter", :class => 'submit' %>
         </div>
       </fieldset>
       <% end %>
+
     </div>
 
     <div id="amounts_form">
@@ -22,8 +26,6 @@
       <fieldset>
         <legend>Update Amounts</legend>
         <div>
-          <%= hidden_field_tag 'paid', params[:paid] %>
-          <%= hidden_field_tag 'not_paid', params[:not_paid] %>
           <label for="value">Got</label>
           <%= text_field_tag 'value', '', :size => 10 %>
           <label for="user">from</label>
@@ -38,7 +40,7 @@
   </div>
 
   <div id="owes">
-    <% current_user = User.find(session[:user_id]) %>
+    <% current_user = @session.user %>
     <% @users.each do |user| %>
     <% if user != current_user %>
     You owe <b><%= number_to_currency(current_user.amount_owed_to(user), :unit => "&euro;") %></b> to

@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
   before_filter :authorize, :except => :login
+  before_filter :load_session
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details
@@ -29,19 +30,14 @@ class ApplicationController < ActionController::Base
     session[:user_session] = nil
   end
 
-  # Returns the currently logged in User.
-  def current_user
-    return session[:user_session].user if !session[:user_session].nil?
+  # Updates the status flag for loading paid Payments.
+  def update_load_paid_flag(new_flag_value)
+    session[:user_session].paid = new_flag_value
   end
 
-  # Defines whether or not paid Payments shall be loaded.
-  def load_paid_payments?
-    return session[:user_session].paid == true
-  end
-
-  # Defines whether or not not paid Payments shall be loaded.
-  def load_not_paid_payments?
-    return session[:user_session].not_paid == true
+  # Updates the status flag for loading not paid Payments.
+  def update_load_not_paid_flag(new_flag_value)
+    session[:user_session].not_paid = new_flag_value
   end
 
   # Defines redirection based on the login status.
@@ -52,8 +48,27 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Returns true if there is a user logged in, false otherwise.
+  # Defines the current session as a class variable in the User model.
+  def load_session
+    User.current_session = session[:user_session]
+    @session = User.current_session
+  end
+
+  # Verifies if not paid payments are to be loaded.
+  def load_not_paid_payments?
+    return session[:user_session].load_not_paid?
+  end
+
+  # Verifies if paid payments are to be loaded.
+  def load_paid_payments?
+    return session[:user_session].load_paid?
+  end
+
+  private
+
+  # Returns a boolean stating whether or not there is a logged in User in the
+  # system.
   def user_logged_in?
-    return !session[:user_session].nil? && !session[:user_session].user.nil?
+    return !session[:user_session].nil?
   end
 end

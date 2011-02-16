@@ -100,7 +100,7 @@ class Payment < ActiveRecord::Base
   # Returns all Payment objects that are paid.
   def self.all_paid
     Payment.find(:all,
-                 :conditions => "paid == value",
+                 :conditions => "paid = value",
                  :order => "created_at DESC")
   end
 

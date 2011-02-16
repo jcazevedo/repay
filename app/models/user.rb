@@ -11,8 +11,9 @@ class User < ActiveRecord::Base
   has_many :payments
   has_many :payment_components
 
-  attr_accessor :password_confirmation
-  attr_reader   :password
+  cattr_accessor :current_session
+  attr_accessor  :password_confirmation
+  attr_reader    :password
 
   validates_presence_of     :name,
                             :username
