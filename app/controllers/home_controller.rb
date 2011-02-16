@@ -1,16 +1,6 @@
 class HomeController < ApplicationController
   before_filter :load_users, :load_payments
 
-  def load_users
-    @users = User.find(:all, :order => 'name ASC')
-  end
-
-  def load_payments
-    @payments = []
-    @payments += Payment.all_not_paid if load_not_paid_payments?
-    @payments += Payment.all_paid if load_paid_payments?
-  end
-
   def update_filters
     update_load_paid_flag(params[:paid] || false)
     update_load_not_paid_flag(params[:not_paid] || false)
@@ -25,9 +15,7 @@ class HomeController < ApplicationController
   def save_payment
     @payment = Payment.new(params[:payment])
     if @payment.save
-      redirect_to :action => 'index', 
-                  :paid => params[:paid], 
-                  :not_paid => params[:not_paid]
+      redirect_to :action => 'index'
     else
       render :action => 'index'
     end
@@ -42,16 +30,14 @@ class HomeController < ApplicationController
     end
 
     if @payment.update_attributes(params[:payment])
-      redirect_to :action => 'index', 
-                  :paid => params[:paid], 
-                  :not_paid => params[:not_paid]
+      redirect_to :action => 'index'
     else
       render :action => 'index'
     end
   end
   
   def update_amount
-    current_user = User.find(session[:user_id])
+    current_user = User.current_session.user
     user = User.find(params[:user])
     amount = params[:value].to_f
 
@@ -59,8 +45,18 @@ class HomeController < ApplicationController
       user.update_amount(current_user, amount)
     end
 
-    redirect_to :action => 'index', 
-                :paid => params[:paid], 
-                :not_paid => params[:not_paid] 
+    redirect_to :action => 'index' 
+  end
+
+  private
+
+  def load_users
+    @users = User.find(:all, :order => 'name ASC')
+  end
+
+  def load_payments
+    @payments = []
+    @payments += Payment.all_not_paid if load_not_paid_payments?
+    @payments += Payment.all_paid if load_paid_payments?
   end
 end
