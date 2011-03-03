@@ -16,7 +16,7 @@
     <% end %>
     <input id="pc"
            size="5"
-           name="payment_components[<%= payment.id %>][paid]"
+           name="payment_components[<%= user.id %>][paid]"
            value="<%= payment.user_component_paid(user) %>"/> /
     <%= number_to_currency(payment.user_component_value(user), :unit => "&euro;") %>
   </td>

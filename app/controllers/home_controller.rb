@@ -25,7 +25,8 @@ class HomeController < ApplicationController
     @payment = Payment.find(params[:id])
 
     params[:payment_components].each do |id, val|
-      @pc = PaymentComponent.find(id)
+      # TODO: hide this logic
+      @pc = @payment.payment_components.find_by_user_id(id)
       @pc.update_attributes(val)
     end
 

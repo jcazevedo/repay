@@ -16,8 +16,9 @@ class Payment < ActiveRecord::Base
                             :user_id,
                             :value
   validates_numericality_of :value
-  validate                  :validate_length_of_users,
-                            :value_must_be_at_least_a_cent
+  validate                  :length_of_users_should_be_at_least_1,
+                            :value_must_be_at_least_a_cent,
+                            :payment_component_values_are_valid
 
   after_create :create_payment_components,
                :update_related_components
@@ -30,6 +31,7 @@ class Payment < ActiveRecord::Base
     self.payment_components.each do |pc|
       @users << pc.user
     end
+
     return @users
   end
   
@@ -114,7 +116,7 @@ class Payment < ActiveRecord::Base
   private
 
   # Validates if the users list is of length above 0.
-  def validate_length_of_users
+  def length_of_users_should_be_at_least_1
     errors.add(:users, 'should be at least 1') if users.nil? ||
       users.length == 0
   end
@@ -122,6 +124,12 @@ class Payment < ActiveRecord::Base
   # Creates an error in case the value field is below 0.01.
   def value_must_be_at_least_a_cent
     errors.add(:value, 'should be at least 0.01') if value.nil? || value < 0.01
+  end
+
+  def payment_component_values_are_valid
+    self.payment_components.each do |pc|
+      errors.add('payment_components[' + pc.user_id.to_s + ']', 'should be between 0 and ' + pc.value.to_s) if pc.paid < 0 || pc.paid > pc.value
+    end
   end
 
   # Updates the value of the paid attribute for the Payment, based on the paid

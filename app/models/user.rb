@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   # Returns the amount owed to the User given as parameter.
   def amount_owed_to(user)
     sum = 0.0
+
     Payment.all_not_paid.each do |payment|
       if payment.user == user
         sum += payment.user_component_owed(self)
