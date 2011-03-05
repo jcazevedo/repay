@@ -22,7 +22,7 @@
   </tr>
   <tr>
     <td />
-    <% form_for :payment, :url => {:action => :save_payment} do |form| %>
+    <% form_for :payment, :url => {:action => :create} do |form| %>
     <%= form.hidden_field :user_id, :value => @session.user.id %>
     <td><%= form.text_field :name, :size => 20 %></td>
     <% @users.each do |user| %>

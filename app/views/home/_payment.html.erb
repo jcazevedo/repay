@@ -1,7 +1,7 @@
 <tr>
   <td><%= payment.user.name %></td>
   <% if payment.user_id == @session.user.id %>
-  <% form_for :payment, :url => {:action => :update_payment} do |form| %>
+  <% form_for :payment, :url => {:action => :update} do |form| %>
   <input type="hidden"
          id="id"
          name="id"

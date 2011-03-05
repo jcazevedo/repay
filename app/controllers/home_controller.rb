@@ -12,7 +12,7 @@ class HomeController < ApplicationController
     @payment = Payment.new
   end
   
-  def save_payment
+  def create
     @payment = Payment.new(params[:payment])
     if @payment.save
       redirect_to :action => 'index'
@@ -21,7 +21,7 @@ class HomeController < ApplicationController
     end
   end
 
-  def update_payment
+  def update
     errors_updating_payment = false
     @updated_payment = Payment.find(params[:id])
     @updated_payment_components = []
