@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
     self.hashed_password = User.encrypted_password(self.password, self.salt)
   end
 
+  def admin?
+    return self.admin
+  end
+
   # Returns the user with the given username and matching the given password.
   def self.authenticate(username, password)
     user = self.find_by_username(username)
