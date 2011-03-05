@@ -1,4 +1,6 @@
-class HomeController < ApplicationController
+class PaymentsController < ApplicationController
+  layout 'main'
+
   before_filter :load_users, :load_payments
 
   def update_filters

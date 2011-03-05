@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  layout 'home'
+  layout 'main'
 
   def login
     if request.post?

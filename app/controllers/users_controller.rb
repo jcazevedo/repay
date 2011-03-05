@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  layout 'main'
+
   def index
   end
 
