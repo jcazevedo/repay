@@ -26,7 +26,7 @@ class HomeController < ApplicationController
     @updated_payment = Payment.find(params[:id])
     @updated_payment_components = []
 
-    params[:payment_components].each do |id, val|
+    params[:payment_components].each do |id, val| 
       # TODO: hide this logic
       @updated_payment_components << @updated_payment.payment_components.find_by_user_id(id)
       if !@updated_payment_components.last.update_attributes(val)
