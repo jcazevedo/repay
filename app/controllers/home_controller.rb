@@ -22,18 +22,26 @@ class HomeController < ApplicationController
   end
 
   def update_payment
-    @payment = Payment.find(params[:id])
+    errors_updating_payment = false
+    @updated_payment = Payment.find(params[:id])
+    @updated_payment_components = []
 
     params[:payment_components].each do |id, val|
       # TODO: hide this logic
-      @pc = @payment.payment_components.find_by_user_id(id)
-      @pc.update_attributes(val)
+      @updated_payment_components << @updated_payment.payment_components.find_by_user_id(id)
+      if !@updated_payment_components.last.update_attributes(val)
+        errors_updating_payment = true
+      end
     end
 
-    if @payment.update_attributes(params[:payment])
-      redirect_to :action => 'index'
-    else
+    if !@updated_payment.update_attributes(params[:payment])
+      errors_updating_payment = true 
+    end
+    
+    if errors_updating_payment
       render :action => 'index'
+    else
+      redirect_to :action => 'index'
     end
   end
   
