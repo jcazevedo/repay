@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  layout 'main'
+  layout "main"
 
   def index
     @users = User.find(:all)
@@ -19,6 +19,13 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:id])
+
+    if @user.update_attributes(params[:user])
+      redirect_to :controller => "payments"
+    else
+      render :action => "edit"
+    end
   end
 
   def destroy
