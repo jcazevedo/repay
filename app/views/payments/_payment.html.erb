@@ -33,15 +33,14 @@
   <% else %>
   <td><%= payment.name %></td>
   <% @users.each do |user| %>
-  <% pu = payment.user_component(user) %>
-  <% if pu %>
-  <% if pu.paid? %>
+  <% if payment.has_user_component?(user) %>
+  <% if payment.user_component_paid?(user) %>
   <td class="paid">
-    <% else %>
+  <% else %>
   <td class="not_paid">
-    <% end %>
-    <%= number_to_currency(pu.paid, :unit => "&euro;") %> /
-    <%= number_to_currency(pu.value, :unit => "&euro;") %>
+  <% end %>
+    <%= number_to_currency(payment.user_component_paid(user), :unit => "&euro;") %> /
+    <%= number_to_currency(payment.user_component_value(user), :unit => "&euro;") %>
   </td>
   <% else %>
   <td>N/A</td>

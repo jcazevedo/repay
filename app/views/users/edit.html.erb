@@ -9,6 +9,11 @@
   </p>
 
   <p>
+    <%= f.label :select %>
+    <%= f.select :locale, LANGUAGES.collect{|name, value| [name, value]} %>
+  </p>
+
+  <p>
     <%= f.label :password %>
     <%= f.password_field :password %>
   </p>
