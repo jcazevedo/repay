@@ -8,7 +8,7 @@ class AdminController < ApplicationController
         set_up_user_session(user.id)
         redirect_to(:controller => 'payments')
       else
-        flash.now[:notice] = "Invalid user/password combination"
+        flash.now[:notice] = I18n.t('main.invalid_login')
       end
     end 
   end

@@ -58,7 +58,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    I18n.locale = session[:user_session].locale || I18n.default_locale
+    if user_logged_in?
+      I18n.locale = session[:user_session].locale || I18n.default_locale
+    else
+      I18n.locale = I18n.default_locale
+    end
 
     locale_path = "#{LOCALES_DIRECTORY}#{I18n.locale}.yml"
 

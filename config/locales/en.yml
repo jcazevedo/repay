@@ -2,6 +2,34 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  layout:
-    logged_in_as: Logged in as
-    logout: Logout
+  activerecord:
+    models:
+      user: "User"
+    attributes:
+      user:
+        name: "Name"
+        username: "Username"
+        locale: "Locale"
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+
+  main:
+    invalid_login: "Invalid user/password combination"
+    logged_in_as:  "Logged in as"
+    logout:        "Logout"
+    edit: "Edit"
+    update: "Update"
+    create: "Create"
+    back: "Back"
+
+  user:
+    user: "User"
+    was_successfully_created: "was successfully created"
+    username: "Username"
+    name: "Name"
+    locale: "Locale"
+    password: "Password"
+    password_confirmation: "Password Confirmation"
+    admin: "Admin"
+    new_user: "New User"
+    editing_user: "Editing User"

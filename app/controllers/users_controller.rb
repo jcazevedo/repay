@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
 
     if @user.save
-      flash[:notice] = "User #{@user.name} was successfully created."
+      flash[:notice] = "#{I18n.t("user.user")} #{@user.name} #{I18n.t("user.was_successfully_created")}."
       redirect_to :action => "index"
     else
       render :action => "new"

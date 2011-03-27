@@ -1,4 +1,4 @@
-<h2>Editing user</h2>
+<h2><%= I18n.t("user.editing_user") %></h2>
 
 <% form_for(@user) do |f| %>
   <%= f.error_messages %>
@@ -9,7 +9,7 @@
   </p>
 
   <p>
-    <%= f.label :select %>
+    <%= f.label :locale %>
     <%= f.select :locale, LANGUAGES.collect{|name, value| [name, value]} %>
   </p>
 
@@ -24,6 +24,6 @@
   </p>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit I18n.t("main.update") %>
   </p>
 <% end %>

@@ -11,8 +11,8 @@
     <div id="banner">
       <div id="user_details">
         <% if session[:user_session] %>
-        <%= I18n.t('layout.logged_in_as') %> <%= link_to @session.user.name, edit_user_path(@session.user) %>. 
-        <%= link_to I18n.t('layout.logout'), :controller => 'admin', :action => 'logout' %>
+        <%= I18n.t('main.logged_in_as') %> <%= link_to @session.user.name, edit_user_path(@session.user) %>. 
+        <%= link_to I18n.t('main.logout'), :controller => 'admin', :action => 'logout' %>
         <% end %>
       </div>
       <div id="title"><h1>HouseKeeper <%= HOUSEKEEPER_VERSION %></h1></div>

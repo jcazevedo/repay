@@ -2,9 +2,9 @@
 
 <table>
   <tr>
-    <th>Username</th>
-    <th>Name</th>
-    <th>Admin</th>
+    <th><%= I18n.t("user.username") %></th>
+    <th><%= I18n.t("user.name") %></th>
+    <th><%= I18n.t("user.admin") %></th>
     <th></th>
   </tr>
   
@@ -28,7 +28,7 @@
     </td>
 
     <td>
-      <%= link_to 'Edit', edit_user_path(user) %><br />
+      <%= link_to I18n.t("main.edit"), edit_user_path(user) %><br />
     </td>
 
   </tr>
@@ -37,4 +37,4 @@
 
 <br />
 
-<%= link_to 'New user', new_user_path %>
+<%= link_to I18n.t("user.new_user"), new_user_path %>
