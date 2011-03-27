@@ -10,4 +10,8 @@ class UserSession
   def load_not_paid?
     return self.not_paid
   end
+
+  def locale
+    return user.locale
+  end
 end

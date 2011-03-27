@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   before_filter :authorize, :except => :login
   before_filter :load_session
+  before_filter :set_locale
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details
@@ -57,8 +58,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    session[:locale] = params[:locale] if params[:locale]
-    I18n.locale = session[:locale] || I18n.default_locale
+    I18n.locale = session[:user_session].locale || I18n.default_locale
 
     locale_path = "#{LOCALES_DIRECTORY}#{I18n.locale}.yml"
 
@@ -68,11 +68,10 @@ class ApplicationController < ActionController::Base
     end
 
   rescue Exception => err
-    logger.error err
     flash.now[:notice] = "#{I18n.locale} translation not available"
 
     I18n.load_path -= [locale_path]
-    I18n.locale = session[:locale] = I18n.default_locale
+    I18n.locale = session[:user_session].locale = I18n.default_locale
   end
 
   private

@@ -5,4 +5,3 @@ en:
   layout:
     logged_in_as: Logged in as
     logout: Logout
-  hello: "Hello world"
