@@ -4,7 +4,7 @@
 en:
   activerecord:
     models:
-      user: "User"
+      user:                    "User"
     attributes:
       user:
         locale:                "Locale"

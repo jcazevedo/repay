@@ -1,4 +1,59 @@
 pt:
+  number:
+    currency:
+      format:
+        unit:                  "€"
+        precision:             2
+        separator:             "."
+        delimiter:             ","
+        format:                "%u%n"
+
+  activerecord:
+    models:
+      user:                    "Utilizador"
+    attributes:
+      user:
+        locale:                "Local"
+        name:                  "Nome"
+        password:              "Password"
+        password_confirmation: "Confirmação de Password"
+        username:              "Nome de Utilizador"
+
   main:
-    logged_in_as: Ligado como
-    logout: Logout
+    back:                      "Voltar"
+    create:                    "Criar"
+    edit:                      "Editar"
+    invalid_login:             "Combinação utilizador/password inválida"
+    logged_in_as:              "Ligado como"
+    logout:                    "Logout"
+    update:                    "Actualizar"
+
+  user:
+    admin:                     "Administrador"
+    editing_user:              "Edição de Utilizador"
+    listing_users:             "Utilizadores"
+    locale:                    "Local"
+    name:                      "Nome"
+    new_user:                  "Novo Utilizador"
+    password:                  "Password"
+    password_confirmation:     "Confirmação de Password"
+    user:                      "Utilizador"
+    username:                  "Nome de Utilizador"
+    was_successfully_created:  "foi criado com sucesso"
+
+  payments:
+    add:                       "Adicionar Pagamento"
+    and_he_is_owing_you:       "e ele está-te a dever"
+    date:                      "Data"
+    filter:                    "Filtro"
+    from:                      "de"
+    got:                       "Recebi"
+    name:                      "Nome"
+    not_paid:                  "Não pago"
+    paid:                      "Pago"
+    paid_by:                   "Pago Por"
+    to:                        "a"
+    total:                     "Total"
+    update:                    "Actualizar Pagamento"
+    update_amounts:            "Actualizar Montantes"
+    you_owe:                   "Deves"
