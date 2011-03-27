@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     if @user.update_attributes(params[:user])
-      set_up_user_session(@user.id)
+      set_up_user_session(@user.id) if @session.user == @user
       redirect_to :controller => "payments"
     else
       render :action => "edit"
