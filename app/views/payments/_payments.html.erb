@@ -11,13 +11,13 @@
 
 <table>
   <tr>
-    <th>Paid By</th>
-    <th>Name</th>
+    <th><%= I18n.t("payments.paid_by") %></th>
+    <th><%= I18n.t("payments.name") %></th>
     <% @users.each do |user| %>
     <th><%= user.name %></th>
     <% end %>
-    <th>Total</th>
-    <th>Date</th>
+    <th><%= I18n.t("payments.total") %></th>
+    <th><%= I18n.t("payments.date") %></th>
     <th />
   </tr>
   <tr>
@@ -36,7 +36,7 @@
     <% end %>
     <td><%= form.text_field :value, :size => 10 %></td>
     <td />
-    <td class="table-form-centered"><%= submit_tag "Add Payment", :class => "submit" %></td>
+    <td class="table-form-centered"><%= submit_tag I18n.t("payments.add"), :class => "submit" %></td>
     <% end %>
   </tr>
   <%= render(:partial => "payment", :collection => payments) %>

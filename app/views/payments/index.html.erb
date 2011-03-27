@@ -6,15 +6,15 @@
       <% form_tag({:action => 'update_filters'},
                   {:class => 'housekeeper-form'}) do %>
       <fieldset>
-        <legend>Filter</legend>
+        <legend><%= I18n.t("payments.filter") %></legend>
         <div>
           <%= check_box_tag 'paid', true, @session.load_paid? %>
-          <label for="paid">Paid</label>
+          <label for="paid"><%= I18n.t("payments.paid") %></label>
 
           <%= check_box_tag 'not_paid', true, @session.load_not_paid? %>
-          <label for="not_paid">Not paid</label>
+          <label for="not_paid"><%= I18n.t("payments.not_paid") %></label>
 
-          <%= submit_tag "Filter", :class => 'submit' %>
+          <%= submit_tag I18n.t("payments.filter"), :class => 'submit' %>
         </div>
       </fieldset>
       <% end %>
@@ -24,14 +24,14 @@
     <div id="amounts_form">
       <% form_tag({:action => 'update_amount'}, {:class => 'housekeeper-form'}) do %>
       <fieldset>
-        <legend>Update Amounts</legend>
+        <legend><%= I18n.t("payments.update_amounts") %></legend>
         <div>
-          <label for="value">Got</label>
+          <label for="value"><%= I18n.t("payments.got") %></label>
           <%= text_field_tag 'value', '', :size => 10 %>
-          <label for="user">from</label>
+          <label for="user"><%= I18n.t("payments.from") %></label>
           <%= select_tag 'user', 
               options_from_collection_for_select(@users, :id, :name) %>
-          <%= submit_tag "Update", :class => 'submit' %>
+          <%= submit_tag I18n.t("main.update"), :class => 'submit' %>
         <div>
       </fieldset>
       <% end %>
@@ -43,8 +43,8 @@
     <% current_user = @session.user %>
     <% @users.each do |user| %>
     <% if user != current_user %>
-    You owe <b><%= number_to_currency(current_user.amount_owed_to(user), :unit => "&euro;") %></b> to
-    <b><%= user.name %></b> and he is owing you
+    <%= I18n.t("payments.you_owe") %> <b><%= number_to_currency(current_user.amount_owed_to(user), :unit => "&euro;") %></b> <%= I18n.t("payments.to") %>
+    <b><%= user.name %></b> <%= I18n.t("payments.and_he_is_owing_you") %>
     <b><%= number_to_currency(user.amount_owed_to(current_user), :unit => "&euro;") %></b>
     <br />
     <% end %>

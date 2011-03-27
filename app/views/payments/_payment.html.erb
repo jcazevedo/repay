@@ -27,7 +27,7 @@
   <td><%= number_to_currency(payment.value, :unit => "&euro;") %></td>
   <td><%= payment.created_at.strftime("%d/%m/%Y") %></td>
   <td class="table-form-centered">
-    <%= submit_tag "Update Payment", :class => "submit" %>
+    <%= submit_tag I18n.t("payments.update"), :class => "submit" %>
   </td>
   <% end %>
   <% else %>
