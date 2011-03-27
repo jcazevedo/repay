@@ -1,12 +1,5 @@
 require 'digest/sha1'
 
-# The User class encapsulates the logic of a user in the system.
-# 
-# It is composed of:
-# * name
-# * username
-# * hashed_password
-# * salt
 class User < ActiveRecord::Base
   has_many :payments
   has_many :payment_components
@@ -21,7 +14,6 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validate                  :password_non_blank
 
-  # Sets the user password.
   def password=(pwd)
     @password = pwd
     return if pwd.blank?
@@ -33,7 +25,6 @@ class User < ActiveRecord::Base
     return self.admin
   end
 
-  # Returns the user with the given username and matching the given password.
   def self.authenticate(username, password)
     user = self.find_by_username(username)
     if user
@@ -45,7 +36,6 @@ class User < ActiveRecord::Base
     user
   end
 
-  # Updates all amounts owed to user with the given value.
   def update_amount(user, value)
     Payment.all_not_paid.each do |payment|
       break if value <= 0
@@ -59,7 +49,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Returns the amount owed to the User given as parameter.
   def amount_owed_to(user)
     sum = 0.0
 
@@ -74,18 +63,15 @@ class User < ActiveRecord::Base
 
   private
 
-  # Validates that the supplied password isn't blank.
   def password_non_blank
     errors.add(:password, "Missing password") if hashed_password.blank?
   end
 
-  # Returns the given password encrypted with the given salt.
   def self.encrypted_password(password, salt)
     string_to_hash = password + "wibble" + salt
     Digest::SHA1.hexdigest(string_to_hash)
   end
 
-  # Creates a new randomized salt for the current User.
   def create_new_salt
     self.salt = self.object_id.to_s + rand.to_s
   end
