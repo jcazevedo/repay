@@ -20,18 +20,36 @@
           <%= link_to @session.user.name, edit_user_path(@session.user) %>. 
 
           <%= link_to I18n.t('main.logout'), :controller => 'admin',
-          :action => 'logout' %>
+                                             :action => 'logout' %>
+          <% else %>
+          <%= link_to I18n.t('main.login'), :controller => 'admin',
+                                            :action => 'login' %>
           <% end %>
         </div>
       </div>
     </div>
-    <div id="main">
-      <% if flash[:notice] %>
+    <div id="wrapper">
+      <div id="main">
+        <% if flash[:notice] %>
         <div id="notice">
           <%= flash[:notice] %>
         </div>
-      <% end -%>
-      <%= yield :layout %>
+        <% end -%>
+        <%= yield :layout %>
+      </div>
+      <div id="links">
+        <ul>
+          <% ["payments", "users"].each do |controller| %>
+          <% if controller == @current_controller %>
+          <li class="selected">
+          <% else %>
+          <li>
+          <% end %>
+            <%= link_to I18n.t('main.' + controller), :controller => controller %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
     <div id="footer">
     </div>

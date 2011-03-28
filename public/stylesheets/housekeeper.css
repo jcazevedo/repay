@@ -78,9 +78,52 @@ body {
   font-size: small;
 }
 
+#wrapper {
+  width: 1000px;
+  margin: auto;
+}
+
+#links {
+  float: right;
+  width: 150px;
+  margin: 0px -1px 0px 0px;
+  font-size: smaller;
+}
+
+#links a {
+  text-decoration: none;
+  color: #463E3F;
+}
+
+#links a:hover {
+  color: #C0C0C0;
+}
+
+#links ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+#links ul li {
+  padding: 6px;
+  margin: 0px 0px -1px 0px;
+  border: 1px solid gray;
+  background-image: url("../images/links-background.png");
+}
+
+#links ul li.selected {
+  background-color: white;
+  background-image: none;
+  border-right: 1px dashed gray;
+}
+
 #main {
-  display: block;
+  float: right;
+  width: 800px;
   font-size: small;
+  border: 1px solid gray;
+  margin: auto;
 }
 
 #payments {

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :authorize, :except => :login
   before_filter :load_session
   before_filter :set_locale
+  before_filter :instantiate_controller_and_action_names
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details
@@ -82,5 +83,10 @@ class ApplicationController < ActionController::Base
 
   def user_logged_in?
     return !session[:user_session].nil?
+  end
+ 
+  def instantiate_controller_and_action_names
+      @current_action = action_name
+      @current_controller = controller_name
   end
 end
