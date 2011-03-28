@@ -1,10 +1,32 @@
 body {
+  margin: 0px;
+  padding: 0px;
   font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
 #banner {
-  border-bottom: 1px solid gray;
+  color: white;
+  padding: 6px 0px 0px 0px;
+  border-bottom: 1px solid black;
   margin-bottom: 20px;
+  background-image: url("../images/title-background.png");
+}
+
+#banner a {
+  text-decoration: none;
+  color: gray;
+}
+
+#banner a:hover {
+  color: #C0C0C0;
+}
+
+#inner-banner {
+  padding: 4px;
+  color: white;
+  border-top: 1px solid white;
+  background-color: black;
+  overflow: auto;
 }
 
 .housekeeper-form {
@@ -45,8 +67,8 @@ body {
 
 #title h1 {
   font-variant: small-caps;
-  padding: 0px;
-  margin: 0px;
+  padding: 4px 15px;
+  margin: 4px 0px;
   display: inline;
 }
 

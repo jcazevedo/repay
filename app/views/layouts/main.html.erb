@@ -4,18 +4,26 @@
   <head>
     <title>HouseKeeper <%= HOUSEKEEPER_VERSION %></title>
     <%= stylesheet_link_tag "housekeeper", :media => "all" %>
-    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag :all %>
   </head>
 
   <body>
     <div id="banner">
-      <div id="user_details">
-        <% if session[:user_session] %>
-        <%= I18n.t('main.logged_in_as') %> <%= link_to @session.user.name, edit_user_path(@session.user) %>. 
-        <%= link_to I18n.t('main.logout'), :controller => 'admin', :action => 'logout' %>
-        <% end %>
+      <div id="title">
+        <h1>HouseKeeper <%= HOUSEKEEPER_VERSION %></h1>
       </div>
-      <div id="title"><h1>HouseKeeper <%= HOUSEKEEPER_VERSION %></h1></div>
+      <div id="inner-banner">
+        <div id="user_details">
+          <% if session[:user_session] %>
+
+          <%= I18n.t('main.logged_in_as') %>
+          <%= link_to @session.user.name, edit_user_path(@session.user) %>. 
+
+          <%= link_to I18n.t('main.logout'), :controller => 'admin',
+          :action => 'logout' %>
+          <% end %>
+        </div>
+      </div>
     </div>
     <div id="main">
       <% if flash[:notice] %>
