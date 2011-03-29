@@ -127,6 +127,14 @@ body {
   margin: auto;
 }
 
+#main h2 {
+  text-align: right;
+  padding: 0px 0px 0px 20px;
+  margin: 0px;
+  border-bottom: 1px dotted gray;
+  color: #404040;
+}
+
 #payments {
   margin: 20px auto;
 }
