@@ -1,4 +1,4 @@
-<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %> payment">
   <td><%= payment.user.name %></td>
   <% if payment.user_id == @session.user.id %>
   <% form_for :payment, :url => {:action => :update} do |form| %>
@@ -6,27 +6,26 @@
          id="id"
          name="id"
          value="<%= payment.id %>" />
-  <td class="20px centered"><%= form.text_field :name, :size => 20, :value => payment.name %></td>
+  <td class="20px centered"><%= form.text_field :name, :value => payment.name %></td>
   <% @users.each do |user| %>
   <% if payment.has_user_component?(user) %>
   <% if payment.user_component_paid?(user) %>
-  <td class="paid">
+  <td class="paid centered">
     <% else %>
-  <td class="not_paid">
+  <td class="not_paid centered">
     <% end %>
     <input id="pc"
-           size="1.5"
            type="text"
            name="payment_components[<%= user.id %>][paid]"
-           value="<%= payment.user_component_paid(user) %>"/> /
+           value="<%= payment.user_component_paid(user) %>"/><br />
     <%= number_to_currency(payment.user_component_value(user), :unit => "&euro;") %>
   </td>
     <% else %>
-  <td>N/A</td>
+  <td class="centered">N/A</td>
   <% end %>
   <% end %>
   <td><%= number_to_currency(payment.value, :unit => "&euro;") %></td>
-  <td><%= payment.created_at.strftime("%d/%m/%Y") %></td>
+  <td class="centered"><%= payment.created_at.strftime("%d/%m/%Y") %></td>
   <td class="centered">
     <%= image_submit_tag "edit.png", :border => 0 %>
   </td>
@@ -38,19 +37,19 @@
   <% @users.each do |user| %>
   <% if payment.has_user_component?(user) %>
   <% if payment.user_component_paid?(user) %>
-  <td class="paid">
+  <td class="paid centered">
   <% else %>
-  <td class="not_paid">
+  <td class="not_paid centered">
   <% end %>
-    <%= number_to_currency(payment.user_component_paid(user), :unit => "&euro;") %> /
+    <%= number_to_currency(payment.user_component_paid(user), :unit => "&euro;") %><br />
     <%= number_to_currency(payment.user_component_value(user), :unit => "&euro;") %>
   </td>
   <% else %>
-  <td>N/A</td>
+  <td class="centered">N/A</td>
   <% end %>
   <% end %>
   <td><%= number_to_currency(payment.value, :unit => "&euro;") %></td>
-  <td><%= payment.created_at.strftime("%d/%m/%Y") %></td>
+  <td class="centered"><%= payment.created_at.strftime("%d/%m/%Y") %></td>
   <td />
   <% end %>
 </tr>

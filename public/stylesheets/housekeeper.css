@@ -172,7 +172,7 @@ body {
 }
 
 #main table td {
-  padding: 2px;
+  padding: 2px 4px 2px 3px;
 }
 
 #main table td.centered {
@@ -187,16 +187,24 @@ body {
   font-size: smaller;
 }
 
-#payments input[type=text], select {
+#payments table input[type=text], table select {
   border: 1px solid gray;
+  text-align: center;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  padding: 0px;
+  width: 100%;
+}
+
+#main table tr.payment {
+  min-height: 10px;
 }
 
 #main table td.paid {
-  background: green;
+  background: #64E986;
 }
 
 #main table td.not_paid {
-  background: red;
+  background: #F75D59;
 }
 
 #main table tr.border-bottom td {
@@ -204,10 +212,6 @@ body {
   padding: 6px;
 }
 
-#main table tr td.20px {
-  width: 20px;
-}
-
-#payments table {
-  table-layout: auto;
+#main table tr.payment {
+  line-height: 22px;
 }
