@@ -19,6 +19,11 @@
   </p>
 
   <p>
+    <%= f.label :admin %>
+    <%= f.select :admin, [["Yes", true], ["No", false]] %>
+  </p>
+
+  <p>
     <%= f.label :password %>
     <%= f.password_field :password %>
   </p>
@@ -33,4 +38,4 @@
   </p>
 <% end %>
 
-<%= link_to I18n.t("main.back"), users_path %>
+<%= link_to image_tag("previous.png", :border => 0, :alt => I18n.t("main.back")), users_path %>
