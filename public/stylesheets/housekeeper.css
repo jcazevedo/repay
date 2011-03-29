@@ -119,6 +119,7 @@ body {
 }
 
 #main {
+  padding: 6px;
   float: right;
   width: 800px;
   font-size: small;
