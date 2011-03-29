@@ -20,13 +20,13 @@
     <th><%= I18n.t("payments.date") %></th>
     <th />
   </tr>
-  <tr>
+  <tr class="border-bottom">
     <td />
     <% form_for :payment, :url => {:action => :create} do |form| %>
     <%= form.hidden_field :user_id, :value => @session.user.id %>
-    <td><%= form.text_field :name, :size => 20 %></td>
+    <td class="20px"><%= form.text_field :name, :size => 20 %></td>
     <% @users.each do |user| %>
-    <td class="table-form-centered"><input id="users" 
+    <td class="centered"><input id="users" 
                type="checkbox"
                name="payment[users][]"
                value="<%= user.id %>" 
@@ -36,7 +36,9 @@
     <% end %>
     <td><%= form.text_field :value, :size => 10 %></td>
     <td />
-    <td class="table-form-centered"><%= submit_tag I18n.t("payments.add"), :class => "submit" %></td>
+    <td class="centered">
+      <%= image_submit_tag "add.png", :border => 0 %>
+    </td>
     <% end %>
   </tr>
   <%= render(:partial => "payment", :collection => payments) %>

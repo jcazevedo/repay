@@ -183,24 +183,31 @@ body {
   margin: 20px auto;
 }
 
-#payments table {
-  width: 100%;
-  border-spacing: 8px;
-}
-
-#payments table td.table-form-centered {
-  text-align: center;
-}
-
 #payments table td {
-  border: 1px solid black;
-  padding: 4px;
+  font-size: smaller;
 }
 
-#payments table td.paid {
+#payments input[type=text], select {
+  border: 1px solid gray;
+}
+
+#main table td.paid {
   background: green;
 }
 
-#payments table td.not_paid {
+#main table td.not_paid {
   background: red;
+}
+
+#main table tr.border-bottom td {
+  border-bottom: 1px solid black;
+  padding: 6px;
+}
+
+#main table tr td.20px {
+  width: 20px;
+}
+
+#payments table {
+  table-layout: auto;
 }

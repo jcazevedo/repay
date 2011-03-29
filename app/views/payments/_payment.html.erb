@@ -1,4 +1,4 @@
-<tr>
+<tr class="<%= cycle('list-line-odd', 'list-line-even') %>">
   <td><%= payment.user.name %></td>
   <% if payment.user_id == @session.user.id %>
   <% form_for :payment, :url => {:action => :update} do |form| %>
@@ -6,7 +6,7 @@
          id="id"
          name="id"
          value="<%= payment.id %>" />
-  <td><%= form.text_field :name, :size => 20, :value => payment.name %></td>
+  <td class="20px centered"><%= form.text_field :name, :size => 20, :value => payment.name %></td>
   <% @users.each do |user| %>
   <% if payment.has_user_component?(user) %>
   <% if payment.user_component_paid?(user) %>
@@ -15,7 +15,8 @@
   <td class="not_paid">
     <% end %>
     <input id="pc"
-           size="5"
+           size="1.5"
+           type="text"
            name="payment_components[<%= user.id %>][paid]"
            value="<%= payment.user_component_paid(user) %>"/> /
     <%= number_to_currency(payment.user_component_value(user), :unit => "&euro;") %>
@@ -26,11 +27,13 @@
   <% end %>
   <td><%= number_to_currency(payment.value, :unit => "&euro;") %></td>
   <td><%= payment.created_at.strftime("%d/%m/%Y") %></td>
-  <td class="table-form-centered">
-    <%= submit_tag I18n.t("payments.update"), :class => "submit" %>
+  <td class="centered">
+    <%= image_submit_tag "edit.png", :border => 0 %>
   </td>
   <% end %>
+
   <% else %>
+
   <td><%= payment.name %></td>
   <% @users.each do |user| %>
   <% if payment.has_user_component?(user) %>
