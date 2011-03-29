@@ -38,6 +38,7 @@ pt:
     locale:                    "Local"
     name:                      "Nome"
     new_user:                  "Novo Utilizador"
+    options:                   "Options"
     password:                  "Password"
     password_confirmation:     "Confirmação de Password"
     user:                      "Utilizador"

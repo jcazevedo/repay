@@ -129,10 +129,35 @@ body {
 
 #main h2 {
   text-align: right;
-  padding: 0px 0px 0px 20px;
-  margin: 0px;
+  padding: 0px;
+  margin: 0px 0px 20px 0px;
   border-bottom: 1px dotted gray;
   color: #404040;
+}
+
+#main table {
+  padding: 2px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#main table th {
+  border-bottom: 2px solid black;
+}
+
+#main table tr.list-line-odd {
+  background: #E0E0E0;
+}
+
+#main table tr.list-line-even {
+}
+
+#main table td {
+  padding: 2px;
+}
+
+#main table td.centered {
+  text-align: center;
 }
 
 #payments {

@@ -29,6 +29,7 @@ en:
     locale:                    "Locale"
     name:                      "Name"
     new_user:                  "New User"
+    options:                   "Options"
     password:                  "Password"
     password_confirmation:     "Password Confirmation"
     user:                      "User"

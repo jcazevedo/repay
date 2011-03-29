@@ -5,7 +5,7 @@
     <th><%= I18n.t("user.username") %></th>
     <th><%= I18n.t("user.name") %></th>
     <th><%= I18n.t("user.admin") %></th>
-    <th></th>
+    <th><%= I18n.t("user.options") %></th>
   </tr>
   
   <% @users.each do |user| %>
@@ -27,8 +27,8 @@
       <% end %>
     </td>
 
-    <td>
-      <%= link_to I18n.t("main.edit"), edit_user_path(user) %><br />
+    <td class="centered">
+      <%= link_to image_tag("edit.png", :border => 0, :alt => I18n.t("main.edit")), edit_user_path(user) %><br />
     </td>
 
   </tr>
@@ -37,4 +37,4 @@
 
 <br />
 
-<%= link_to I18n.t("user.new_user"), new_user_path %>
+<%= link_to image_tag("add.png", :border => 0, :alt => I18n.t("user.new_user")), new_user_path %>
