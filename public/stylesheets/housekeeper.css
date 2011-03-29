@@ -30,17 +30,36 @@ body {
 }
 
 .housekeeper-form {
+  width: 500px;
   margin: auto;
-  width: 200px;
-}
-
-.housekeeper-form input[type=text], select {
   display: block;
 }
 
+.housekeeper-form label {
+  font-weight: bold;
+  float: left;
+  width: 200px;
+  margin-top: 3px;
+  text-align: right;
+  padding: 0 1em;
+}
+
+.housekeeper-form input[type=text], input[type=password], select {
+  border: 1px solid gray;
+  width: 200px;
+}
+
+.housekeeper-form .submit-container {
+  text-align: center;
+}
+
 .housekeeper-form .submit {
-  margin-top: 20px;
-  float: right;
+  margin-top: 10px;
+}
+
+.housekeeper-form p {
+  display: block;
+  clear: both;
 }
 
 #payment_forms {

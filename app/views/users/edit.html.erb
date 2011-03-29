@@ -1,6 +1,6 @@
 <h2><%= I18n.t("user.editing_user") %></h2>
 
-<% form_for(@user) do |f| %>
+<% form_for(@user, :html => {:class => 'housekeeper-form'}) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -28,8 +28,8 @@
     <%= f.password_field :password_confirmation %>
   </p>
 
-  <p>
-    <%= f.submit I18n.t("main.update") %>
+  <p class="submit-container">
+    <%= f.submit I18n.t("main.update"), :class => 'submit' %>
   </p>
 <% end %>
 
