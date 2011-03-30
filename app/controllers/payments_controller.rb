@@ -28,12 +28,8 @@ class PaymentsController < ApplicationController
     @updated_payment = Payment.find(params[:id])
     @updated_payment_components = []
 
-    params[:payment_components].each do |id, val| 
-      # TODO: hide this logic
-      @updated_payment_components << @updated_payment.payment_components.find_by_user_id(id)
-      if !@updated_payment_components.last.update_attributes(val)
-        errors_updating_payment = true
-      end
+    params[:payment_components].each do |id, val|
+      @updated_payment.update_user_component_paid(User.find(id), val)
     end
 
     if !@updated_payment.update_attributes(params[:payment])
