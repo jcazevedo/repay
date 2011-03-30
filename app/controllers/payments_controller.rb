@@ -26,10 +26,9 @@ class PaymentsController < ApplicationController
   def update
     errors_updating_payment = false
     @updated_payment = Payment.find(params[:id])
-    @updated_payment_components = []
 
     params[:payment_components].each do |id, val|
-      @updated_payment.update_user_component_paid(User.find(id), val)
+      component = @updated_payment.update_user_component_paid(User.find(id), val)
     end
 
     if !@updated_payment.update_attributes(params[:payment])

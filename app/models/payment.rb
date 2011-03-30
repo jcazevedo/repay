@@ -66,7 +66,7 @@ class Payment < ActiveRecord::Base
 
   def update_user_component_paid(user, value)
     Payment.transaction do
-      set_user_component_paid(user, value)
+      component = set_user_component_paid(user, value)
       update_paid
     end
   end
