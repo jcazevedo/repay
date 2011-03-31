@@ -20,16 +20,25 @@
   <div id="payment_forms">
 
     <div id="amounts_form">
-      <% form_tag({:action => 'update_amount'}, {:class => 'housekeeper-form'}) do %>
+      <% form_tag({:action => 'update_amount'}, 
+                  {:class => 'housekeeper-smaller-form'}) do %>
       <fieldset>
         <legend><%= I18n.t("payments.update_amounts") %></legend>
         <div>
-          <label for="value"><%= I18n.t("payments.got") %></label>
-          <%= text_field_tag 'value', '', :size => 10 %>
-          <label for="user"><%= I18n.t("payments.from") %></label>
-          <%= select_tag 'user', 
-              options_from_collection_for_select(@users, :id, :name) %>
-          <%= submit_tag I18n.t("main.update"), :class => 'submit' %>
+          <p>
+            <label for="value"><%= I18n.t("payments.got") %></label>
+            <%= text_field_tag 'value', '', :size => 10 %>
+          </p>
+
+          <p>
+            <label for="user"><%= I18n.t("payments.from") %></label>
+            <%= select_tag 'user', 
+                options_from_collection_for_select(@users, :id, :name) %>
+          </p>
+
+          <p class="submit-container">
+            <%= submit_tag I18n.t("main.update"), :class => 'submit' %>
+          </p>
         <div>
       </fieldset>
       <% end %>
@@ -38,7 +47,7 @@
     
     <div id="filter_form">
       <% form_tag({:action => 'update_filters'},
-                  {:class => 'housekeeper-form'}) do %>
+                  {:class => 'housekeeper-smaller-form'}) do %>
       <fieldset>
         <legend><%= I18n.t("payments.filter") %></legend>
         <div>

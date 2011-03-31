@@ -29,6 +29,48 @@ body {
   overflow: auto;
 }
 
+.housekeeper-smaller-form {
+  width: 300px;
+  margin: auto;
+  display: block;
+}
+
+.housekeeper-smaller-form label {
+  font-weight: bold;
+  float: left;
+  width: 100px;
+  margin-top: 3px;
+  text-align: right;
+  padding: 0 1em;
+}
+
+.housekeeper-smaller-form input[type=text] {
+  border: 1px solid gray;
+  width: 100px;
+}
+
+.housekeeper-smaller-form select {
+  border: 1px solid gray;
+  width: 100px;
+}
+
+.housekeeper-smaller-form input[type=checkbox] {
+  border: 1px solid gray;
+}
+
+.housekeeper-smaller-form .submit-container {
+  text-align: center;
+}
+
+.housekeeper-smaller-form .submit {
+  margin-top: 10px;
+}
+
+.housekeeper-smaller-form p {
+  display: block;
+  clear: both;
+}
+
 .housekeeper-form {
   width: 500px;
   margin: auto;
@@ -70,18 +112,13 @@ body {
 }
 
 #filter_form {
-  display: inline;
   float: left;
   margin: 0px 20px;
-  height: 100%;
-  overflow: auto;
 }
 
 #amounts_form {
   float: right;
   margin: 0px 20px;
-  height: 100%;
-  overflow: auto;
 }
 
 #title h1 {
@@ -180,7 +217,7 @@ body {
 }
 
 #owes {
-  width: 400px;
+  width: 500px;
   margin: 0 auto 30px auto;
 }
 
@@ -188,6 +225,10 @@ body {
   border-bottom: 1px solid gray;
   margin-bottom: 4px;
   color: gray;
+}
+
+#payments_table {
+  margin-top: 20px;
 }
 
 #payments {
