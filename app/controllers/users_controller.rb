@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   layout "main"
 
+  before_filter :is_admin
+
   def index
     @users = User.find(:all)
   end
@@ -39,5 +41,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def is_admin
+    unless session[:user_session] && @session.user.admin?
+      redirect_to :controller => 'payments'
+    end
   end
 end
