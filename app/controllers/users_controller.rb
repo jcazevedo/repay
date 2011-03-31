@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_filter :is_admin
 
   def index
-    @users = User.find(:all)
+    @users = User.find(:all, :conditions => ["deleted = false"])
   end
 
   def show
@@ -41,7 +41,18 @@ class UsersController < ApplicationController
   end
 
   def delete
-    redirect_to :controller => "payments"
+    @user = User.find(params[:id])
+    
+    payments = Payment.all_with_user_component(@user)
+    payments.each do |payment|
+      value = payment.user_component_value(@user)
+      payment.update_user_component_paid(@user, value)
+    end
+
+    @user.deleted = true
+    @user.save
+
+    redirect_to :controller => "users"
   end
 
   private

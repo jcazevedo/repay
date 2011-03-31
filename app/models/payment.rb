@@ -87,6 +87,18 @@ class Payment < ActiveRecord::Base
                  :conditions => "paid != value",
                  :order => "created_at DESC")
   end
+ 
+  def self.all_with_user_component(user)
+    payments = []
+    
+    Payment.find(:all).each do |payment|
+      if payment.has_user_component?(user)
+        payments << payment
+      end
+    end
+
+    payments
+  end
 
   private
 

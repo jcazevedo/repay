@@ -57,7 +57,8 @@ class PaymentsController < ApplicationController
   private
 
   def load_users
-    @users = User.find(:all, :order => 'name ASC')
+    @users = User.find(:all, :order => 'name ASC',
+                             :conditions => ["deleted = false"])
   end
 
   def load_payments
