@@ -28,6 +28,7 @@ pt:
     login:                     "Login"
     logout:                    "Logout"
     payments:                  "Pagamentos"
+    summary:                   "Summary"
     update:                    "Actualizar"
     users:                     "Utilizadores"
 

@@ -2,26 +2,22 @@
 
 <div id="payments">
 
-  <div id="payment_forms">
-
-    <div id="filter_form">
-      <% form_tag({:action => 'update_filters'},
-                  {:class => 'housekeeper-form'}) do %>
-      <fieldset>
-        <legend><%= I18n.t("payments.filter") %></legend>
-        <div>
-          <%= check_box_tag 'paid', true, @session.load_paid? %>
-          <label for="paid"><%= I18n.t("payments.paid") %></label>
-
-          <%= check_box_tag 'not_paid', true, @session.load_not_paid? %>
-          <label for="not_paid"><%= I18n.t("payments.not_paid") %></label>
-
-          <%= submit_tag I18n.t("payments.filter"), :class => 'submit' %>
-        </div>
-      </fieldset>
+  <div id="owes">
+    <h3><%= I18n.t('main.summary') %></h3>
+    <% current_user = @session.user %>
+    <% @users.each do |user| %>
+      <% if user != current_user %>
+        <%= I18n.t("payments.you_owe") %> <b><%= number_to_currency(current_user.amount_owed_to(user), :unit => "&euro;") %></b> <%= I18n.t("payments.to") %>
+        <b><%= user.name %></b> 
+        <%= I18n.t("payments.and_he_is_owing_you") %>
+        <b><%= number_to_currency(user.amount_owed_to(current_user), 
+                                  :unit => "&euro;") %></b>
+        <br />
       <% end %>
+    <% end %>
+  </div>
 
-    </div>
+  <div id="payment_forms">
 
     <div id="amounts_form">
       <% form_tag({:action => 'update_amount'}, {:class => 'housekeeper-form'}) do %>
@@ -39,18 +35,31 @@
       <% end %>
     </div>
 
-  </div>
+    
+    <div id="filter_form">
+      <% form_tag({:action => 'update_filters'},
+                  {:class => 'housekeeper-form'}) do %>
+      <fieldset>
+        <legend><%= I18n.t("payments.filter") %></legend>
+        <div>
+          <p> 
+            <label for="paid"><%= I18n.t("payments.paid") %></label>
+            <%= check_box_tag 'paid', true, @session.load_paid? %>
+          </p>
 
-  <div id="owes">
-    <% current_user = @session.user %>
-    <% @users.each do |user| %>
-    <% if user != current_user %>
-    <%= I18n.t("payments.you_owe") %> <b><%= number_to_currency(current_user.amount_owed_to(user), :unit => "&euro;") %></b> <%= I18n.t("payments.to") %>
-    <b><%= user.name %></b> <%= I18n.t("payments.and_he_is_owing_you") %>
-    <b><%= number_to_currency(user.amount_owed_to(current_user), :unit => "&euro;") %></b>
-    <br />
-    <% end %>
-    <% end %>
+          <p>
+            <label for="not_paid"><%= I18n.t("payments.not_paid") %></label>
+            <%= check_box_tag 'not_paid', true, @session.load_not_paid? %>
+          </p>
+
+          <p class="submit-container">
+            <%= submit_tag I18n.t("payments.filter"), :class => 'submit' %>
+          </p>
+        </div>
+      </fieldset>
+      <% end %>
+    </div>
+
   </div>
 
   <div id="payments_table">

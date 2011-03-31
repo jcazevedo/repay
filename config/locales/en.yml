@@ -19,6 +19,7 @@ en:
     login:                     "Login"
     logout:                    "Logout"
     payments:                  "Payments"
+    summary:                   "Summary"
     update:                    "Update"
     users:                     "Users"
 
