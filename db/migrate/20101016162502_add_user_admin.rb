@@ -3,7 +3,8 @@ class AddUserAdmin < ActiveRecord::Migration
     User.create(:name => 'Admin',
                 :username => 'admin',
                 :password => 'admin', 
-                :password_confirmation => 'admin')
+                :password_confirmation => 'admin',
+                :admin => true)
   end
 
   def self.down
