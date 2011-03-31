@@ -1,8 +1,6 @@
 <h2><%= I18n.t("user.editing_user") %></h2>
 
 <% form_for(@user, :html => {:class => 'housekeeper-form'}) do |f| %>
-  <%= f.error_messages %>
-
   <p>
     <%= f.label :name %>
     <%= f.text_field :name %>
