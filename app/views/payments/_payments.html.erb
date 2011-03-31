@@ -1,14 +1,3 @@
-<div>
-  <%= error_messages_for 'payment' %>
-
-  <%= error_messages_for 'updated_payment' %>
-  <% if @updated_payment_components %>
-  <% @updated_payment_components.each do |pc| %>
-  <%= error_messages_for 'payment_component', :object => pc %>
-  <% end %>
-  <% end %>
-</div>
-
 <table>
   <tr>
     <th><%= I18n.t("payments.paid_by") %></th>
