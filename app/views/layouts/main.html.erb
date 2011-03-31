@@ -34,7 +34,8 @@
       </div>
       <div id="links">
         <ul>
-          <% ["payments", "users"].each do |controller| %>
+          <% [["payments", false], ["users", true]].each do |controller, admin| %>
+          <% if session[:user_session] && (!admin || @session.user.admin?) %>
           <% if controller == @current_controller %>
           <li class="selected">
           <% else %>
@@ -42,6 +43,7 @@
           <% end %>
             <%= link_to I18n.t('main.' + controller), :controller => controller %>
           </li>
+          <% end %>
           <% end %>
         </ul>
       </div>
