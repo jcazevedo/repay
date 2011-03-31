@@ -22,6 +22,7 @@ pt:
   main:
     back:                      "Voltar"
     create:                    "Criar"
+    delete:                    "Apagar"
     edit:                      "Editar"
     invalid_login:             "Combinação utilizador/password inválida"
     logged_in_as:              "Ligado como"

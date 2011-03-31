@@ -40,7 +40,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
+  def delete
+    redirect_to :controller => "payments"
   end
 
   private

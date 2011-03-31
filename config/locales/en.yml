@@ -13,6 +13,7 @@ en:
   main:
     back:                      "Back"
     create:                    "Create"
+    delete:                    "Delete"
     edit:                      "Edit"
     invalid_login:             "Invalid user/password combination"
     logged_in_as:              "Logged in as"
