@@ -3,6 +3,15 @@ HouseKeeper
 
 HouseKeeper is a simple web-application to manage payments on a shared house.
 
+Features
+--------
+
+  * Add/edit/delete users
+  * Create payments to be evenly divided by the selected users
+  * Automatically update debts when adding a new payment
+  * Automatically update values by specifying how much has been received from a
+    single user.
+
 License
 -------
 
