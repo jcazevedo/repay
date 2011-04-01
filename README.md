@@ -17,7 +17,7 @@ License
 
 (The MIT License)
 
-Copyright (c) 2010 Joao Azevedo <joao.c.azevedo@gmail.com>
+Copyright (c) 2011 Joao Azevedo <joao.c.azevedo@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
