@@ -10,7 +10,7 @@ Features
   * Create payments to be evenly divided by the selected users
   * Automatically update debts when adding a new payment
   * Automatically update values by specifying how much has been received from a
-    single user.
+    single user
 
 License
 -------
