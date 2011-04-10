@@ -27,7 +27,7 @@ class Payment < ActiveRecord::Base
   end
   
   def paid?
-    return self.paid == self.value
+    return self.paid >= self.value
   end
 
   def has_user_component?(user)
