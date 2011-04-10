@@ -78,13 +78,13 @@ class Payment < ActiveRecord::Base
 
   def self.all_paid
     Payment.find(:all,
-                 :conditions => "paid = value",
+                 :conditions => "paid >= value",
                  :order => "created_at DESC")
   end
 
   def self.all_not_paid
     Payment.find(:all,
-                 :conditions => "paid != value",
+                 :conditions => "paid < value",
                  :order => "created_at DESC")
   end
  
