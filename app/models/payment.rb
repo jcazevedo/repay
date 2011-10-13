@@ -27,7 +27,10 @@ class Payment < ActiveRecord::Base
   end
   
   def paid?
-    return self.paid >= self.value
+    payment_components.each do |pc|
+      return false if !pc.paid?
+    end
+    return true
   end
 
   def has_user_component?(user)
@@ -77,15 +80,23 @@ class Payment < ActiveRecord::Base
   end
 
   def self.all_paid
-    Payment.find(:all,
-                 :conditions => "paid >= value",
-                 :order => "created_at DESC")
+    payments = []
+
+    Payment.find(:all, :order => "created_at DESC").each do |p|
+      payments << p if p.paid?
+    end
+
+    payments
   end
 
   def self.all_not_paid
-    Payment.find(:all,
-                 :conditions => "paid < value",
-                 :order => "created_at DESC")
+    payments = []
+    
+    Payment.find(:all, :order => "created_at DESC").each do |p|
+      payments << p if !p.paid?
+    end
+
+    payments
   end
  
   def self.all_with_user_component(user)
@@ -173,7 +184,7 @@ class Payment < ActiveRecord::Base
         payments = user.payments
 
         payments.each do |payment|
-          if payment.user != self.user && payment.has_user_component?(self.user)
+          if payment.has_user_component?(self.user)
             pc_paid = payment.user_component_paid(self.user)
             pc_value = payment.user_component_value(self.user)
             this_pc_paid = self.user_component_paid(payment.user)
@@ -185,7 +196,7 @@ class Payment < ActiveRecord::Base
               
               if pc_paid >= pc_value
                 val += (pc_paid - pc_value)
-                this_pc_paid -= pc_paid - pc_value
+                this_pc_paid -= (pc_paid - pc_value)
                 pc_paid = pc_value
               end
 

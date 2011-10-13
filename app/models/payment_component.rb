@@ -7,7 +7,7 @@ class PaymentComponent < ActiveRecord::Base
   validate :paid_is_between_0_and_value
 
   def paid?
-    paid >= value
+    (paid*100).to_i >= (value*100).to_i
   end
 
   private
